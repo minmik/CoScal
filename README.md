@@ -21,14 +21,19 @@ and each type of processor shows some properties related to running CNN:
 we'll define symbols as such:
 
 *DVFS_available*: whether DVFS can be used for this processor. Most NPUs do not support DVFS.
+
 *V, f* : Voltage and frequency that can be selected by DVFS system.
+
 *n* : number of processors being used by the application for a certain type [ex] *n ( C1 )*
+
 *Th* : Throughput achieved by a processor running at certain V & f.  [ex] *Th ( C2, V, f )*
+
 *E* : Energy required to process one image by a processor running at certain V & f. [ex] *E ( C2, V, f )*
 
 and the application has these requirements:
 
 *Th_tar* : Target throughput
+
 *E_max* : Energy budget
 
 then the problem can be defined as:

@@ -20,9 +20,9 @@ We can make an abstraction of this system like this:
 and each type of processor shows some properties related to running CNN. We'll define symbols as such:  
 
 *DVFS_available*: whether DVFS can be used for this processor. Most NPUs do not support DVFS.  
-*V, f* : Voltage and frequency that can be selected by DVFS system.  
+*V, f* : Voltage and frequency that can be selected by DVFS system. [ex] *V_k, f_k* for CPU *C_K* and *V_GPU, f_GPU* for GPU
 *n* : number of processors being used by the application for a certain type [ex] *n_k* for CPU *C_k*  
-*Th* : Throughput achieved by a processor running at certain V & f.  [ex] *Th ( C2, V, f )*  
+*Th* : Throughput achieved by a processor running at certain V & f.  [ex] *Th_k( V, f )* for CPU *C_k*    
 *E* : Energy required to process one image by a processor running at certain V & f. [ex] *E_k( V, f )* for CPU *C_k*  
 
 and the application has these requirements:  

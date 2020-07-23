@@ -14,7 +14,9 @@ Take Pixel 4 for a running example.
 |NPU         | Pixel Neural Core (TPU) |
 
 We can make an abstraction of this system like this:  
+
 ![problem0](./img/readme_image0.svg)
+
 and each type of processor shows some properties related to running CNN. We'll define symbols as such:  
 
 *DVFS_available*: whether DVFS can be used for this processor. Most NPUs do not support DVFS.  

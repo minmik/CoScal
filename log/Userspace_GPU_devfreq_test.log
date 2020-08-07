@@ -1,0 +1,32 @@
+#### Tested on rooted F8131 Sony Xperia X Performance Android 8.0.0 ####
+#### Adreno 530, default dvfs_governor = msm-adreno-tz ####
+
+
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # ls
+available_frequencies  available_governors  cur_freq  device  governor  max_freq  min_freq  polling_interval  power  subsystem  target_freq  trans_stat  uevent  userspace  
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat cur_freq
+214000000
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat polling_interval                                                                                                      
+10
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat userspace/                                                                                                            
+cat: userspace/: Is a directory
+1|F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # ls userspace/                                                                                                           
+set_freq
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat av
+available_frequencies   available_governors
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat available_frequencies                                                                                                 
+133000000 214000000 315000000 401800000 510000000 560000000 624000000
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat available_governors                                                                                                   
+spdm_bw_hyp cache_hwmon mem_latency bw_hwmon msm-vidc-vmem+ msm-vidc-vmem msm-vidc-ddr bw_vbif gpubw_mon msm-adreno-tz cpufreq userspace powersave performance simple_ondemand
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat cur_freq                                                                                                              
+214000000
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat governor                                                                                                              
+userspace
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat av
+available_frequencies   available_governors
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat available_governors                                                                                                   
+spdm_bw_hyp cache_hwmon mem_latency bw_hwmon msm-vidc-vmem+ msm-vidc-vmem msm-vidc-ddr bw_vbif gpubw_mon msm-adreno-tz cpufreq userspace powersave performance simple_ondemand
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # echo 315000000 > userspace/set_freq                                                                                       
+F8131:/sys/devices/soc/b00000.qcom,kgsl-3d0/devfreq/b00000.qcom,kgsl-3d0 # cat cur_freq                                                                                                              
+315000000
+

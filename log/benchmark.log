@@ -1,0 +1,344 @@
+jongminkim@jongminkim-msi:~$ adb shell
+F8131:/ # su
+F8131:/ # cd /data/local/tmp/                                                  
+F8131:/data/local/tmp # ./
+benchmark_model
+lite-model_aiy_vision_classifier_food_V1_1.tflite
+F8131:/data/local/tmp # ./benchmark_model --help                               
+STARTING!
+Duplicate flags: num_threads
+usage: ./benchmark_model <flags>
+Flags:
+	--num_runs=50                       	int32	optional	expected number of runs, see also min_secs, max_secs
+	--min_secs=1                        	float	optional	minimum number of seconds to rerun for, potentially making the actual number of runs to be greater than num_runs
+	--max_secs=150                      	float	optional	maximum number of seconds to rerun for, potentially making the actual number of runs to be less than num_runs. Note if --max-secs is exceeded in the middle of a run, the benchmark will continue to the end of the run but will not start the next run.
+	--run_delay=-1                      	float	optional	delay between runs in seconds
+	--num_threads=1                     	int32	optional	number of threads
+	--use_caching=false                 	bool	optional	Enable caching of prepacked weights matrices in matrix multiplication routines. Currently implies the use of the Ruy library.
+	--benchmark_name=                   	string	optional	benchmark name
+	--output_prefix=                    	string	optional	benchmark output prefix
+	--warmup_runs=1                     	int32	optional	minimum number of runs performed on initialization, to allow performance characteristics to settle, see also warmup_min_secs
+	--warmup_min_secs=0.5               	float	optional	minimum number of seconds to rerun for, potentially making the actual number of warm-up runs to be greater than warmup_runs
+	--graph=                            	string	optional	graph file name
+	--input_layer=                      	string	optional	input layer names
+	--input_layer_shape=                	string	optional	input layer shape
+	--input_layer_value_range=          	string	optional	A map-like string representing value range for *integer* input layers. Each item is separated by ':', and the item value consists of input layer name and integer-only range values (both low and high are inclusive) separated by ',', e.g. input1,1,2:input2,0,254
+	--input_layer_value_files=          	string	optional	A map-like string representing value file. Each item is separated by ',', and the item value consists of input layer name and value file path separated by ':', e.g. input1:file_path1,input2:file_path2. If the input_name appears both in input_layer_value_range and input_layer_value_files, input_layer_value_range of the input_name will be ignored. The file format is binary and it should be array format or null separated strings format.
+	--use_legacy_nnapi=false            	bool	optional	use legacy nnapi api
+	--allow_fp16=false                  	bool	optional	allow fp16
+	--require_full_delegation=false     	bool	optional	require delegate to run the entire graph
+	--enable_op_profiling=false         	bool	optional	enable op profiling
+	--max_profiling_buffer_entries=1024 	int32	optional	max profiling buffer entries
+	--profiling_output_csv_file=        	string	optional	File path to export profile data as CSV, if not set prints to stdout.
+	--enable_platform_tracing=false     	bool	optional	enable platform-wide tracing, only meaningful when --enable_op_profiling is set to true.
+	--num_threads=1                     	int32	optional	number of threads used for inference on CPU.
+	--max_delegated_partitions=0        	int32	optional	Max number of partitions to be delegated.
+	--min_nodes_per_partition=0         	int32	optional	The minimal number of TFLite graph nodes of a partition that has to be reached for it to be delegated.A negative value or 0 means to use the default choice of each delegate.
+	--external_delegate_path=           	string	optional	The library path for the underlying external.
+	--external_delegate_options=        	string	optional	Comma-separated options to be passed to the external delegate
+	--use_gpu=false                     	bool	optional	use gpu
+	--gpu_precision_loss_allowed=true   	bool	optional	Allow to process computation in lower precision than FP32 in GPU. By default, it's enabled.
+	--gpu_experimental_enable_quant=true	bool	optional	Whether to enable the GPU delegate to run quantized models or not. By default, it's enabled.
+	--gpu_backend=                      	string	optional	Force the GPU delegate to use a particular backend for execution, and fail if unsuccessful. Should be one of: cl, gl
+	--use_hexagon=false                 	bool	optional	Use Hexagon delegate
+	--hexagon_lib_path=/data/local/tmp  	string	optional	The library path for the underlying Hexagon libraries.
+	--hexagon_profiling=false           	bool	optional	Enables Hexagon profiling
+	--use_nnapi=false                   	bool	optional	use nnapi delegate api
+	--nnapi_execution_preference=       	string	optional	execution preference for nnapi delegate. Should be one of the following: fast_single_answer, sustained_speed, low_power, undefined
+	--nnapi_accelerator_name=           	string	optional	the name of the nnapi accelerator to use (requires Android Q+)
+	--disable_nnapi_cpu=false           	bool	optional	Disable the NNAPI CPU device
+	--nnapi_allow_fp16=false            	bool	optional	Allow fp32 computation to be run in fp16
+	--use_xnnpack=false                 	bool	optional	use XNNPack
+
+Benchmarking failed.
+_classifier_food_V1_1.tflite --use_gpu=true --allow_fp16=true                 <
+STARTING!
+Duplicate flags: num_threads
+Min num runs: [50]
+Min runs duration (seconds): [1]
+Max runs duration (seconds): [150]
+Inter-run delay (seconds): [-1]
+Num threads: [1]
+Use caching: [0]
+Benchmark name: []
+Output prefix: []
+Min warmup runs: [1]
+Min warmup runs duration (seconds): [0.5]
+Graph: [./lite-model_aiy_vision_classifier_food_V1_1.tflite]
+Input layers: []
+Input shapes: []
+Input value ranges: []
+Input layer values files: []
+Use legacy nnapi : [0]
+Allow fp16 : [1]
+Require full delegation : [0]
+Enable op profiling: [0]
+Max profiling buffer entries: [1024]
+CSV File to export profiling data to: []
+Enable platform-wide tracing: [0]
+#threads used for CPU inference: [1]
+Max number of delegated partitions : [0]
+Min nodes per partition : [0]
+External delegate path : []
+External delegate options : []
+Use gpu : [1]
+Allow lower precision in gpu : [1]
+Enable running quant models in gpu : [1]
+GPU backend : []
+Use Hexagon : [0]
+Hexagon lib path : [/data/local/tmp]
+Hexagon Profiling : [0]
+Use nnapi : [0]
+Use xnnpack : [0]
+Loaded model ./lite-model_aiy_vision_classifier_food_V1_1.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Initialized OpenCL-based API.
+INFO: Created 1 GPU delegate kernels.
+Applied GPU delegate, and the model graph will be completely executed w/ the delegate.
+The input model file size (MB): 21.1516
+Initialized session in 1564.41ms.
+Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+count=33 first=17291 curr=16235 min=9613 max=18452 avg=15212.9 std=2495
+
+Running benchmark for at least 50 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+count=62 first=16343 curr=15463 min=15261 max=17995 avg=16018.4 std=522
+
+Inference timings in us: Init: 1564412, First inference: 17291, Warmup (avg): 15212.9, Inference (avg): 16018.4
+Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+Peak memory footprint (MB): init=78.2656 overall=78.2656
+/benchmark_model --graph=./lite-model_aiy_vision_classifier_food_V1_1.tflite --use_gpu=true --allow_fp16=true --gpu_backend=cl                                                                 <
+STARTING!
+Duplicate flags: num_threads
+Min num runs: [50]
+Min runs duration (seconds): [1]
+Max runs duration (seconds): [150]
+Inter-run delay (seconds): [-1]
+Num threads: [1]
+Use caching: [0]
+Benchmark name: []
+Output prefix: []
+Min warmup runs: [1]
+Min warmup runs duration (seconds): [0.5]
+Graph: [./lite-model_aiy_vision_classifier_food_V1_1.tflite]
+Input layers: []
+Input shapes: []
+Input value ranges: []
+Input layer values files: []
+Use legacy nnapi : [0]
+Allow fp16 : [1]
+Require full delegation : [0]
+Enable op profiling: [0]
+Max profiling buffer entries: [1024]
+CSV File to export profiling data to: []
+Enable platform-wide tracing: [0]
+#threads used for CPU inference: [1]
+Max number of delegated partitions : [0]
+Min nodes per partition : [0]
+External delegate path : []
+External delegate options : []
+Use gpu : [1]
+Allow lower precision in gpu : [1]
+Enable running quant models in gpu : [1]
+GPU backend : [cl]
+Use Hexagon : [0]
+Hexagon lib path : [/data/local/tmp]
+Hexagon Profiling : [0]
+Use nnapi : [0]
+Use xnnpack : [0]
+Loaded model ./lite-model_aiy_vision_classifier_food_V1_1.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Initialized OpenCL-based API.
+INFO: Created 1 GPU delegate kernels.
+Applied GPU delegate, and the model graph will be completely executed w/ the delegate.
+The input model file size (MB): 21.1516
+Initialized session in 1565.77ms.
+Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+count=35 first=16193 curr=15852 min=9320 max=16705 avg=14423.5 std=2112
+
+Running benchmark for at least 50 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+count=64 first=15454 curr=15296 min=15080 max=16827 avg=15641.8 std=304
+
+Inference timings in us: Init: 1565768, First inference: 16193, Warmup (avg): 14423.5, Inference (avg): 15641.8
+Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+Peak memory footprint (MB): init=78.25 overall=78.25
+F8131:/data/local/tmp # cat /sys/class/kgsl/kgsl-3d0/devfreq/governor
+performance
+/benchmark_model --graph=./lite-model_aiy_vision_classifier_food_V1_1.tflite --use_gpu=true --allow_fp16=true --gpu_backend=cl                                                                 <
+STARTING!
+Duplicate flags: num_threads
+Min num runs: [50]
+Min runs duration (seconds): [1]
+Max runs duration (seconds): [150]
+Inter-run delay (seconds): [-1]
+Num threads: [1]
+Use caching: [0]
+Benchmark name: []
+Output prefix: []
+Min warmup runs: [1]
+Min warmup runs duration (seconds): [0.5]
+Graph: [./lite-model_aiy_vision_classifier_food_V1_1.tflite]
+Input layers: []
+Input shapes: []
+Input value ranges: []
+Input layer values files: []
+Use legacy nnapi : [0]
+Allow fp16 : [1]
+Require full delegation : [0]
+Enable op profiling: [0]
+Max profiling buffer entries: [1024]
+CSV File to export profiling data to: []
+Enable platform-wide tracing: [0]
+#threads used for CPU inference: [1]
+Max number of delegated partitions : [0]
+Min nodes per partition : [0]
+External delegate path : []
+External delegate options : []
+Use gpu : [1]
+Allow lower precision in gpu : [1]
+Enable running quant models in gpu : [1]
+GPU backend : [cl]
+Use Hexagon : [0]
+Hexagon lib path : [/data/local/tmp]
+Hexagon Profiling : [0]
+Use nnapi : [0]
+Use xnnpack : [0]
+Loaded model ./lite-model_aiy_vision_classifier_food_V1_1.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Initialized OpenCL-based API.
+INFO: Created 1 GPU delegate kernels.
+Applied GPU delegate, and the model graph will be completely executed w/ the delegate.
+The input model file size (MB): 21.1516
+Initialized session in 1557.81ms.
+Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+count=34 first=11619 curr=16055 min=9474 max=18196 avg=14829.8 std=2451
+
+Running benchmark for at least 50 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+count=62 first=15507 curr=15199 min=15199 max=18473 avg=16074.6 std=826
+
+Inference timings in us: Init: 1557813, First inference: 11619, Warmup (avg): 14829.8, Inference (avg): 16074.6
+Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+Peak memory footprint (MB): init=78.2617 overall=78.2617
+F8131:/data/local/tmp # cat /sys/class/kgsl/kgsl-3d0/devfreq/governor                                                                                                                           
+powersave
+F8131:/data/local/tmp # clear
+
+F8131:/data/local/tmp # cat /sys/class/kgsl/kgsl-3d0/devfreq/governor                                                                                                                           
+powersave
+/benchmark_model --graph=./lite-model_aiy_vision_classifier_food_V1_1.tflite --use_gpu=true --allow_fp16=true --gpu_backend=cl                                                                 <
+STARTING!
+Duplicate flags: num_threads
+Min num runs: [50]
+Min runs duration (seconds): [1]
+Max runs duration (seconds): [150]
+Inter-run delay (seconds): [-1]
+Num threads: [1]
+Use caching: [0]
+Benchmark name: []
+Output prefix: []
+Min warmup runs: [1]
+Min warmup runs duration (seconds): [0.5]
+Graph: [./lite-model_aiy_vision_classifier_food_V1_1.tflite]
+Input layers: []
+Input shapes: []
+Input value ranges: []
+Input layer values files: []
+Use legacy nnapi : [0]
+Allow fp16 : [1]
+Require full delegation : [0]
+Enable op profiling: [0]
+Max profiling buffer entries: [1024]
+CSV File to export profiling data to: []
+Enable platform-wide tracing: [0]
+#threads used for CPU inference: [1]
+Max number of delegated partitions : [0]
+Min nodes per partition : [0]
+External delegate path : []
+External delegate options : []
+Use gpu : [1]
+Allow lower precision in gpu : [1]
+Enable running quant models in gpu : [1]
+GPU backend : [cl]
+Use Hexagon : [0]
+Hexagon lib path : [/data/local/tmp]
+Hexagon Profiling : [0]
+Use nnapi : [0]
+Use xnnpack : [0]
+Loaded model ./lite-model_aiy_vision_classifier_food_V1_1.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Initialized OpenCL-based API.
+INFO: Created 1 GPU delegate kernels.
+Applied GPU delegate, and the model graph will be completely executed w/ the delegate.
+The input model file size (MB): 21.1516
+Initialized session in 1570.63ms.
+Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+count=34 first=16948 curr=19533 min=9328 max=19533 avg=14770.3 std=2754
+
+Running benchmark for at least 50 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+count=66 first=15896 curr=13837 min=9805 max=18013 avg=15242.2 std=1944
+
+Inference timings in us: Init: 1570631, First inference: 16948, Warmup (avg): 14770.3, Inference (avg): 15242.2
+Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+Peak memory footprint (MB): init=78.2773 overall=78.2773
+F8131:/data/local/tmp # cat /sys/class/kgsl/kgsl-3d0/devfreq/governor                                                                                                                           
+performance
+/benchmark_model --graph=./lite-model_aiy_vision_classifier_food_V1_1.tflite --use_gpu=true --allow_fp16=true --gpu_backend=cl                                                                 <
+STARTING!
+Duplicate flags: num_threads
+Min num runs: [50]
+Min runs duration (seconds): [1]
+Max runs duration (seconds): [150]
+Inter-run delay (seconds): [-1]
+Num threads: [1]
+Use caching: [0]
+Benchmark name: []
+Output prefix: []
+Min warmup runs: [1]
+Min warmup runs duration (seconds): [0.5]
+Graph: [./lite-model_aiy_vision_classifier_food_V1_1.tflite]
+Input layers: []
+Input shapes: []
+Input value ranges: []
+Input layer values files: []
+Use legacy nnapi : [0]
+Allow fp16 : [1]
+Require full delegation : [0]
+Enable op profiling: [0]
+Max profiling buffer entries: [1024]
+CSV File to export profiling data to: []
+Enable platform-wide tracing: [0]
+#threads used for CPU inference: [1]
+Max number of delegated partitions : [0]
+Min nodes per partition : [0]
+External delegate path : []
+External delegate options : []
+Use gpu : [1]
+Allow lower precision in gpu : [1]
+Enable running quant models in gpu : [1]
+GPU backend : [cl]
+Use Hexagon : [0]
+Hexagon lib path : [/data/local/tmp]
+Hexagon Profiling : [0]
+Use nnapi : [0]
+Use xnnpack : [0]
+Loaded model ./lite-model_aiy_vision_classifier_food_V1_1.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Initialized OpenCL-based API.
+INFO: Created 1 GPU delegate kernels.
+Applied GPU delegate, and the model graph will be completely executed w/ the delegate.
+The input model file size (MB): 21.1516
+Initialized session in 1554.87ms.
+Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+count=34 first=11888 curr=16185 min=10114 max=18518 avg=15034.7 std=2372
+
+Running benchmark for at least 50 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+count=63 first=16559 curr=15519 min=15260 max=18146 avg=15979.6 std=489
+
+Inference timings in us: Init: 1554872, First inference: 11888, Warmup (avg): 15034.7, Inference (avg): 15979.6
+Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+Peak memory footprint (MB): init=78.2695 overall=78.2695
+

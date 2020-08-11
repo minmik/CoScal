@@ -1,0 +1,496 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 485/485   #P:4
+#
+#                              _-----=> irqs-off
+#                             / _----=> need-resched
+#                            | / _---=> hardirq/softirq
+#                            || / _--=> preempt-depth
+#                            ||| /     delay
+#           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION
+#              | |       |   ||||       |         |
+  benchmark_mode-9479  [002] ...1  6157.618559: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6157.618612: kgsl_pwr_request_state: d_name=kgsl-3d0 state=AWARE
+  benchmark_mode-9479  [002] ...1  6157.620908: kgsl_pwr_set_state: d_name=kgsl-3d0 state=AWARE
+  benchmark_mode-9479  [002] ...1  6157.622022: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6157.625665: kgsl_pwrlevel: d_name=kgsl-3d0 pwrlevel=0 freq=624000000 prev_pwrlevel=5 prev_freq=214000000
+  kgsl_worker_th-213   [003] ...1  6157.625826: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:7-9444  [001] ...1  6157.626082: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+          <idle>-0     [001] ..s2  6157.640091: kgsl_pwr_request_state: d_name=kgsl-3d0 state=DEEP_NAP
+    kworker/u8:7-9444  [001] ...1  6157.640307: kgsl_pwr_set_state: d_name=kgsl-3d0 state=DEEP_NAP
+  benchmark_mode-9479  [002] ..s1  6157.700104: kgsl_pwr_request_state: d_name=kgsl-3d0 state=SLUMBER
+    kworker/u8:8-9376  [000] ...1  6157.702590: kgsl_pwr_set_state: d_name=kgsl-3d0 state=SLUMBER
+  benchmark_mode-9479  [003] ...1  6159.168828: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.168869: kgsl_pwr_request_state: d_name=kgsl-3d0 state=AWARE
+  benchmark_mode-9479  [003] ...1  6159.169224: kgsl_pwrlevel: d_name=kgsl-3d0 pwrlevel=5 freq=214000000 prev_pwrlevel=0 prev_freq=624000000
+  benchmark_mode-9479  [003] ...1  6159.171206: kgsl_pwr_set_state: d_name=kgsl-3d0 state=AWARE
+  benchmark_mode-9479  [003] ...1  6159.172346: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.175972: kgsl_pwrlevel: d_name=kgsl-3d0 pwrlevel=0 freq=624000000 prev_pwrlevel=5 prev_freq=214000000
+    kworker/u8:8-9376  [001] ...1  6159.183105: kgsl_pwrstats: d_name=kgsl-3d0 total=10771 busy=7127 ram_time=1105905 ram_wait=0 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.184242: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.184442: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.185903: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.186002: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+  kgsl_worker_th-213   [002] ...1  6159.194252: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.194519: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.194595: kgsl_pwrstats: d_name=kgsl-3d0 total=11518 busy=9132 ram_time=1670412 ram_wait=176042 context_count=1
+  benchmark_mode-9479  [002] ...1  6159.195916: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.196055: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+  kgsl_worker_th-213   [003] ...1  6159.204257: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.204525: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.204611: kgsl_pwrstats: d_name=kgsl-3d0 total=10016 busy=8081 ram_time=1381771 ram_wait=137841 context_count=1
+  benchmark_mode-9479  [002] ...1  6159.207348: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.207450: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+  kgsl_worker_th-213   [003] ...1  6159.215631: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.215900: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.215983: kgsl_pwrstats: d_name=kgsl-3d0 total=11372 busy=8063 ram_time=1387592 ram_wait=140265 context_count=1
+  benchmark_mode-9479  [002] ...1  6159.218866: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.218969: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.226217: kgsl_pwrstats: d_name=kgsl-3d0 total=10233 busy=7200 ram_time=1136484 ram_wait=119750 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.227290: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.227547: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.230502: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.230605: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.237813: kgsl_pwrstats: d_name=kgsl-3d0 total=11616 busy=8080 ram_time=1395865 ram_wait=142234 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.238880: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.239135: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.246121: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.246289: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.253803: kgsl_pwrstats: d_name=kgsl-3d0 total=16012 busy=8345 ram_time=1467904 ram_wait=140753 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.254866: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [001] ...1  6159.255095: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.263856: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.264027: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [001] ...1  6159.271560: kgsl_pwrstats: d_name=kgsl-3d0 total=17778 busy=8111 ram_time=1395954 ram_wait=140690 context_count=1
+  kgsl_worker_th-213   [000] ...1  6159.272610: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [001] ...1  6159.272908: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.280440: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.280655: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.288075: kgsl_pwrstats: d_name=kgsl-3d0 total=16537 busy=7997 ram_time=1354708 ram_wait=140651 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.289153: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.289465: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.296835: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.297009: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.304655: kgsl_pwrstats: d_name=kgsl-3d0 total=16601 busy=8333 ram_time=1437271 ram_wait=137692 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.305538: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.305838: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.313608: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.313782: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.321409: kgsl_pwrstats: d_name=kgsl-3d0 total=16776 busy=8076 ram_time=1384818 ram_wait=141511 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.322329: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.322632: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.331049: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.331221: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.338727: kgsl_pwrstats: d_name=kgsl-3d0 total=17342 busy=7997 ram_time=1367070 ram_wait=138770 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.339707: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.340130: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.347679: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.347849: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.355513: kgsl_pwrstats: d_name=kgsl-3d0 total=16811 busy=8299 ram_time=1424390 ram_wait=146521 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.356400: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.356700: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.364931: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.365103: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.372783: kgsl_pwrstats: d_name=kgsl-3d0 total=17292 busy=8144 ram_time=1395877 ram_wait=145863 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.373641: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.373940: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.381871: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.382043: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.389539: kgsl_pwrstats: d_name=kgsl-3d0 total=16778 busy=7929 ram_time=1361460 ram_wait=143096 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.390573: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.390795: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.398788: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.399008: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.406640: kgsl_pwrstats: d_name=kgsl-3d0 total=17127 busy=8217 ram_time=1414674 ram_wait=141314 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.407605: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.407905: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.415768: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.415940: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.423562: kgsl_pwrstats: d_name=kgsl-3d0 total=16941 busy=8151 ram_time=1391176 ram_wait=140844 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.424494: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.424802: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.432439: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.432612: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.440416: kgsl_pwrstats: d_name=kgsl-3d0 total=16877 busy=8304 ram_time=1414356 ram_wait=143208 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.441139: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.441440: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.448818: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.448992: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.456659: kgsl_pwrstats: d_name=kgsl-3d0 total=16267 busy=7968 ram_time=1379367 ram_wait=143051 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.457533: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.457832: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.465354: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.465529: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.473198: kgsl_pwrstats: d_name=kgsl-3d0 total=16564 busy=8114 ram_time=1386652 ram_wait=136249 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.474076: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.474427: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.481893: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.482061: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.489563: kgsl_pwrstats: d_name=kgsl-3d0 total=16388 busy=7953 ram_time=1358824 ram_wait=137586 context_count=1
+  kgsl_worker_th-213   [001] ...1  6159.490531: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.490791: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [000] ...1  6159.500637: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [000] ...1  6159.500779: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.508059: kgsl_pwrstats: d_name=kgsl-3d0 total=18521 busy=7920 ram_time=1322367 ram_wait=138898 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.509311: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.509493: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.515391: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.515561: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.522978: kgsl_pwrstats: d_name=kgsl-3d0 total=14941 busy=8223 ram_time=1427294 ram_wait=134011 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.524107: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.524417: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.531370: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.531541: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.539028: kgsl_pwrstats: d_name=kgsl-3d0 total=16072 busy=8159 ram_time=1406838 ram_wait=140356 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.539986: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.540352: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.548853: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.551580: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.559371: kgsl_pwrstats: d_name=kgsl-3d0 total=20364 busy=8399 ram_time=1424238 ram_wait=145496 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.560815: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [003] ...1  6159.561203: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.572314: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.572470: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.579716: kgsl_pwrstats: d_name=kgsl-3d0 total=20371 busy=7619 ram_time=1271717 ram_wait=133610 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.581006: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.581222: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.588017: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.588184: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.595728: kgsl_pwrstats: d_name=kgsl-3d0 total=16028 busy=8391 ram_time=1478750 ram_wait=145995 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.596573: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.596829: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.603752: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.603922: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.611351: kgsl_pwrstats: d_name=kgsl-3d0 total=15643 busy=8025 ram_time=1371832 ram_wait=141178 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.612256: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.612462: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.619914: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.620374: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.627916: kgsl_pwrstats: d_name=kgsl-3d0 total=16590 busy=8170 ram_time=1414813 ram_wait=144397 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.628932: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.629143: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.636618: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.636789: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.644395: kgsl_pwrstats: d_name=kgsl-3d0 total=16504 busy=8204 ram_time=1403544 ram_wait=143698 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.645339: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.645639: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.652897: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.653071: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.660585: kgsl_pwrstats: d_name=kgsl-3d0 total=16214 busy=8030 ram_time=1379843 ram_wait=139428 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.661664: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.661877: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.668992: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.669162: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.676654: kgsl_pwrstats: d_name=kgsl-3d0 total=16090 busy=8093 ram_time=1381160 ram_wait=142926 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.677734: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.678049: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.686219: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.686385: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [003] ...1  6159.694072: kgsl_pwrstats: d_name=kgsl-3d0 total=17444 busy=8297 ram_time=1418912 ram_wait=142243 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.694923: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [003] ...1  6159.695123: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.702768: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.702938: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [003] ...1  6159.710820: kgsl_pwrstats: d_name=kgsl-3d0 total=16768 busy=8301 ram_time=1432757 ram_wait=159160 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.711338: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.711637: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.719187: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.719356: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.727020: kgsl_pwrstats: d_name=kgsl-3d0 total=16218 busy=7864 ram_time=1347860 ram_wait=115448 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.727865: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.728181: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.735396: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.735565: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.742979: kgsl_pwrstats: d_name=kgsl-3d0 total=15978 busy=7862 ram_time=1332622 ram_wait=141526 context_count=1
+  kgsl_worker_th-213   [000] ...1  6159.744109: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.744422: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.751322: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.751489: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.758849: kgsl_pwrstats: d_name=kgsl-3d0 total=15898 busy=8055 ram_time=1369210 ram_wait=142919 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.760001: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [001] ...1  6159.760452: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.768174: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.768336: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.775833: kgsl_pwrstats: d_name=kgsl-3d0 total=17005 busy=8260 ram_time=1438536 ram_wait=140275 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.776731: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.777038: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.784495: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.784664: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.792148: kgsl_pwrstats: d_name=kgsl-3d0 total=16342 busy=8109 ram_time=1388463 ram_wait=139166 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.793193: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.793500: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.801156: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.801326: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.808838: kgsl_pwrstats: d_name=kgsl-3d0 total=16713 busy=8139 ram_time=1397498 ram_wait=148800 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.809799: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.811181: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.817613: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.817783: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.825293: kgsl_pwrstats: d_name=kgsl-3d0 total=16479 busy=8119 ram_time=1391490 ram_wait=138725 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.826241: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.826548: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.833581: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.833752: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.841409: kgsl_pwrstats: d_name=kgsl-3d0 total=16139 busy=8251 ram_time=1424470 ram_wait=140534 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.842254: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.842562: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6159.849720: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6159.849910: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.857604: kgsl_pwrstats: d_name=kgsl-3d0 total=16219 busy=8151 ram_time=1396141 ram_wait=141321 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.858399: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.858705: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [001] ...1  6159.867922: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [001] ...1  6159.868113: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.875641: kgsl_pwrstats: d_name=kgsl-3d0 total=18058 busy=7936 ram_time=1358116 ram_wait=150171 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.876669: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.876863: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.884184: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.884586: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.892115: kgsl_pwrstats: d_name=kgsl-3d0 total=16501 busy=8178 ram_time=1404124 ram_wait=144742 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.893119: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.893418: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.900929: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.901095: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.908682: kgsl_pwrstats: d_name=kgsl-3d0 total=16588 busy=8175 ram_time=1400454 ram_wait=147170 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.909638: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.909946: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.917332: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.917506: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6159.925085: kgsl_pwrstats: d_name=kgsl-3d0 total=16430 busy=8138 ram_time=1392363 ram_wait=137543 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.926063: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6159.926363: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.933550: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.933722: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.941008: kgsl_pwrstats: d_name=kgsl-3d0 total=15947 busy=7856 ram_time=1309892 ram_wait=136292 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.942038: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.942243: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.949512: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.949679: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.957027: kgsl_pwrstats: d_name=kgsl-3d0 total=16042 busy=8134 ram_time=1402704 ram_wait=144821 context_count=1
+  kgsl_worker_th-213   [003] ...1  6159.958028: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.958241: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [001] ...1  6159.967795: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [001] ...1  6159.968030: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6159.975645: kgsl_pwrstats: d_name=kgsl-3d0 total=18640 busy=8342 ram_time=1454104 ram_wait=139902 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.976609: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6159.976904: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6159.984710: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6159.984870: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6159.992241: kgsl_pwrstats: d_name=kgsl-3d0 total=16618 busy=7893 ram_time=1342487 ram_wait=137218 context_count=1
+  kgsl_worker_th-213   [002] ...1  6159.993332: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6159.993588: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.000885: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.001059: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6160.008647: kgsl_pwrstats: d_name=kgsl-3d0 total=16435 busy=8303 ram_time=1443742 ram_wait=139056 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.009588: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6160.009888: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.017023: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.017191: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [000] ...1  6160.024897: kgsl_pwrstats: d_name=kgsl-3d0 total=16271 busy=8223 ram_time=1414180 ram_wait=145671 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.025773: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [000] ...1  6160.026072: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.033375: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.033548: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.041046: kgsl_pwrstats: d_name=kgsl-3d0 total=16172 busy=7947 ram_time=1363386 ram_wait=135047 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.041986: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.042295: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.049346: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.049515: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.057215: kgsl_pwrstats: d_name=kgsl-3d0 total=16193 busy=8284 ram_time=1408681 ram_wait=138066 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.058036: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.058333: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.065601: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.065768: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.073240: kgsl_pwrstats: d_name=kgsl-3d0 total=16047 busy=7864 ram_time=1347902 ram_wait=135308 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.074225: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.074432: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.081585: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.081754: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.089173: kgsl_pwrstats: d_name=kgsl-3d0 total=15958 busy=8038 ram_time=1370072 ram_wait=143382 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.090369: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.090581: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.097669: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.097840: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.105527: kgsl_pwrstats: d_name=kgsl-3d0 total=16376 busy=8373 ram_time=1440884 ram_wait=147376 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.106362: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.106660: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.114018: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.114190: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.121875: kgsl_pwrstats: d_name=kgsl-3d0 total=16364 busy=8088 ram_time=1387965 ram_wait=145178 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.122763: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.123061: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.130265: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.130430: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.138092: kgsl_pwrstats: d_name=kgsl-3d0 total=16247 busy=8132 ram_time=1392322 ram_wait=134010 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.138953: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.139252: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.146300: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.146472: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.154128: kgsl_pwrstats: d_name=kgsl-3d0 total=16060 busy=8089 ram_time=1388550 ram_wait=144768 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.154991: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.155286: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.162642: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.162809: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.170512: kgsl_pwrstats: d_name=kgsl-3d0 total=16361 busy=8091 ram_time=1379180 ram_wait=135263 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.171337: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.171562: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [001] ...1  6160.181808: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [001] ...1  6160.181997: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.189611: kgsl_pwrstats: d_name=kgsl-3d0 total=19165 busy=8044 ram_time=1379407 ram_wait=141103 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.190587: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.190810: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.197977: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.198149: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.205865: kgsl_pwrstats: d_name=kgsl-3d0 total=16280 busy=8240 ram_time=1403442 ram_wait=135947 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.206586: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.206875: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.214013: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.214182: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.221686: kgsl_pwrstats: d_name=kgsl-3d0 total=15841 busy=7889 ram_time=1349670 ram_wait=139334 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.222685: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.222992: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.229767: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.229936: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.237568: kgsl_pwrstats: d_name=kgsl-3d0 total=15907 busy=8250 ram_time=1420966 ram_wait=139200 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.238408: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.238716: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.245782: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.245952: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.253625: kgsl_pwrstats: d_name=kgsl-3d0 total=16082 busy=8150 ram_time=1394561 ram_wait=142080 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.254416: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.254720: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.262176: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.262345: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.269864: kgsl_pwrstats: d_name=kgsl-3d0 total=16264 busy=7956 ram_time=1365111 ram_wait=141453 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.270877: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.271101: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.278712: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.278883: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.286451: kgsl_pwrstats: d_name=kgsl-3d0 total=16612 busy=8168 ram_time=1400138 ram_wait=142005 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.287298: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.287599: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.294979: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.295148: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.302655: kgsl_pwrstats: d_name=kgsl-3d0 total=16230 busy=8038 ram_time=1373660 ram_wait=138550 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.303686: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.303988: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.310962: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.311174: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.318678: kgsl_pwrstats: d_name=kgsl-3d0 total=16045 busy=8098 ram_time=1388029 ram_wait=146575 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.319694: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.319999: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.327624: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.327796: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.335367: kgsl_pwrstats: d_name=kgsl-3d0 total=16713 busy=8149 ram_time=1397860 ram_wait=145899 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.336246: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.336550: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.343920: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.344090: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.351762: kgsl_pwrstats: d_name=kgsl-3d0 total=16419 busy=8207 ram_time=1403422 ram_wait=139359 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.352548: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.352849: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.360364: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.360585: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.368208: kgsl_pwrstats: d_name=kgsl-3d0 total=16469 busy=8059 ram_time=1384768 ram_wait=136222 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.369009: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.369309: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [001] ...1  6160.378632: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [001] ...1  6160.378876: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.386421: kgsl_pwrstats: d_name=kgsl-3d0 total=18235 busy=7980 ram_time=1376093 ram_wait=139944 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.387428: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.387720: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.394584: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.394751: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.402345: kgsl_pwrstats: d_name=kgsl-3d0 total=15948 busy=8161 ram_time=1398448 ram_wait=141429 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.403325: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.403639: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.411084: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.411254: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.418748: kgsl_pwrstats: d_name=kgsl-3d0 total=16427 busy=8007 ram_time=1374176 ram_wait=146134 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.419740: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.420197: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.427347: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.427517: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.435178: kgsl_pwrstats: d_name=kgsl-3d0 total=16454 busy=8283 ram_time=1422568 ram_wait=147212 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.436026: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.436326: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.443730: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.443899: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.451540: kgsl_pwrstats: d_name=kgsl-3d0 total=16386 busy=8136 ram_time=1401325 ram_wait=138245 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.452369: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.452667: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [002] ...1  6160.459943: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [002] ...1  6160.460437: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.467979: kgsl_pwrstats: d_name=kgsl-3d0 total=16462 busy=7949 ram_time=1367604 ram_wait=143144 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.468914: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.469172: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.477411: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.477572: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.485107: kgsl_pwrstats: d_name=kgsl-3d0 total=17150 busy=8134 ram_time=1391274 ram_wait=143487 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.486028: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.486237: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.494020: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.494188: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.501710: kgsl_pwrstats: d_name=kgsl-3d0 total=16628 busy=8050 ram_time=1381118 ram_wait=150169 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.502605: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.502910: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.510263: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.510429: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.517964: kgsl_pwrstats: d_name=kgsl-3d0 total=16270 busy=8136 ram_time=1398091 ram_wait=144310 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.518978: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.519285: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.526902: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.527071: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.534716: kgsl_pwrstats: d_name=kgsl-3d0 total=16784 busy=8230 ram_time=1413062 ram_wait=137390 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.535552: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.535856: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.543373: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.543546: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.550978: kgsl_pwrstats: d_name=kgsl-3d0 total=16285 busy=7905 ram_time=1349446 ram_wait=137872 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.551886: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.552104: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [000] ...1  6160.559839: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [000] ...1  6160.560441: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.567890: kgsl_pwrstats: d_name=kgsl-3d0 total=16937 busy=8071 ram_time=1381136 ram_wait=141936 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.568961: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.569170: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [000] ...1  6160.576306: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [000] ...1  6160.576495: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.583988: kgsl_pwrstats: d_name=kgsl-3d0 total=16125 busy=8137 ram_time=1395617 ram_wait=141038 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.585036: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:6-9070  [000] ...1  6160.585241: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.592404: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.592575: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:6-9070  [000] ...1  6160.600199: kgsl_pwrstats: d_name=kgsl-3d0 total=16237 busy=8263 ram_time=1429470 ram_wait=136084 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.601128: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.601349: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [000] ...1  6160.612015: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [000] ...1  6160.612231: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.619674: kgsl_pwrstats: d_name=kgsl-3d0 total=19500 busy=7892 ram_time=1345882 ram_wait=139066 context_count=1
+  kgsl_worker_th-213   [003] ...1  6160.620799: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.621004: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.628152: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.628324: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.635901: kgsl_pwrstats: d_name=kgsl-3d0 total=16254 busy=8247 ram_time=1417940 ram_wait=140931 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.636803: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.637108: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.644553: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.644724: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.652319: kgsl_pwrstats: d_name=kgsl-3d0 total=16441 busy=8106 ram_time=1394345 ram_wait=136123 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.653160: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.653464: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [003] ...1  6160.661048: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [003] ...1  6160.661217: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.668746: kgsl_pwrstats: d_name=kgsl-3d0 total=16451 busy=8022 ram_time=1380918 ram_wait=143603 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.669701: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.670125: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+  benchmark_mode-9479  [001] ...1  6160.679497: kgsl_pwr_request_state: d_name=kgsl-3d0 state=ACTIVE
+  benchmark_mode-9479  [001] ...1  6160.679744: kgsl_pwr_set_state: d_name=kgsl-3d0 state=ACTIVE
+    kworker/u8:8-9376  [001] ...1  6160.687293: kgsl_pwrstats: d_name=kgsl-3d0 total=18570 busy=8131 ram_time=1397504 ram_wait=142347 context_count=1
+  kgsl_worker_th-213   [002] ...1  6160.688254: kgsl_pwr_request_state: d_name=kgsl-3d0 state=NAP
+    kworker/u8:8-9376  [001] ...1  6160.688443: kgsl_pwr_set_state: d_name=kgsl-3d0 state=NAP
+          <idle>-0     [001] ..s2  6160.700109: kgsl_pwr_request_state: d_name=kgsl-3d0 state=DEEP_NAP
+    kworker/u8:8-9376  [001] ...1  6160.700314: kgsl_pwr_set_state: d_name=kgsl-3d0 state=DEEP_NAP
+          <idle>-0     [002] ..s2  6160.760119: kgsl_pwr_request_state: d_name=kgsl-3d0 state=SLUMBER
+    kworker/u8:8-9376  [000] ...1  6160.762965: kgsl_pwrlevel: d_name=kgsl-3d0 pwrlevel=5 freq=214000000 prev_pwrlevel=0 prev_freq=624000000
+    kworker/u8:8-9376  [001] ...1  6160.765819: kgsl_pwr_set_state: d_name=kgsl-3d0 state=SLUMBER

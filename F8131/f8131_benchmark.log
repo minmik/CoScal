@@ -1,0 +1,29 @@
+adbd is already running as root
+---Test 1 for frequency 624000000---
+count=36 first=10407 curr=15655 min=9590 max=17089 avg=13876 std=2328
+count=100 first=15535 curr=15501 min=14724 max=16392 avg=15594.2 std=322
+Inference timings in us: Init: 1582322, First inference: 10407, Warmup (avg): 13876, Inference (avg): 15594.2
+---Test 2 for frequency 560000000---
+count=32 first=11402 curr=14652 min=10441 max=18671 avg=15538 std=2416
+count=100 first=11311 curr=16882 min=11311 max=19710 avg=16631.4 std=868
+Inference timings in us: Init: 1594695, First inference: 11402, Warmup (avg): 15538, Inference (avg): 16631.4
+---Test 3 for frequency 510000000---
+count=30 first=12912 curr=18096 min=11851 max=18718 avg=16976.9 std=2162
+count=100 first=19863 curr=17341 min=13558 max=20334 avg=17707.1 std=646
+Inference timings in us: Init: 1630296, First inference: 12912, Warmup (avg): 16976.9, Inference (avg): 17707.1
+---Test 4 for frequency 401800000---
+count=26 first=14779 curr=20081 min=13983 max=22396 avg=19277.6 std=2441
+count=100 first=23900 curr=20277 min=19398 max=23900 avg=20147 std=558
+Inference timings in us: Init: 1679582, First inference: 14779, Warmup (avg): 19277.6, Inference (avg): 20147
+---Test 5 for frequency 315000000---
+count=22 first=19213 curr=23485 min=18968 max=25350 avg=22786.6 std=1969
+count=100 first=23359 curr=23583 min=21544 max=26961 avg=23700.2 std=984
+Inference timings in us: Init: 1730404, First inference: 19213, Warmup (avg): 22786.6, Inference (avg): 23700.2
+---Test 6 for frequency 214000000---
+count=16 first=25336 curr=30209 min=25336 max=37147 avg=32841.6 std=3728
+count=100 first=32141 curr=31642 min=29854 max=36989 avg=34230.9 std=1510
+Inference timings in us: Init: 1718150, First inference: 25336, Warmup (avg): 32841.6, Inference (avg): 34230.9
+---Test 7 for frequency 133000000---
+count=11 first=36848 curr=43931 min=36848 max=52786 avg=46818.5 std=5381
+count=100 first=51084 curr=48852 min=41366 max=53515 avg=49114.3 std=2121
+Inference timings in us: Init: 1731007, First inference: 36848, Warmup (avg): 46818.5, Inference (avg): 49114.3

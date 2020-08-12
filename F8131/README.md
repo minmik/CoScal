@@ -19,11 +19,11 @@ After preparing TFT file via XperiFirm, now use Flashtool to flash the device. F
 
 3. When done flashing unplug the device and enter fastboot mode (hold vol up + plug usb) replug the deivce and flash TWRP:  
 ``` console
-fastboot flash recovery twrp-3.2.1-0-dora.img
+$ fastboot flash recovery twrp-3.2.1-0-dora.img
 ```
 then flash kernel:  
 ``` console
-fastboot flash boot boot.img
+$ fastboot flash boot boot.img
 ```
 
 4. Unplug and enter TWRP (Hold vol down + power button)  
@@ -57,10 +57,11 @@ simple_ondemand
 The default governor is **msm-adreno-tz** which is basically more performance-oriented version of ondemand governor.
 
 ``` console
-su
-echo 1 >/sys/class/kgsl/kgsl-3d0/force_clk_on
-echo 10000000 >/sys/class/kgsl/kgsl-3d0/idle_timer
-echo performance >/sys/class/kgsl/kgsl-3d0/devfreq/governor
-echo [**want_clock**] > /sys/class/kgsl/kgsl-3d0/max_gpuclk
+# su
+# echo 1 >/sys/class/kgsl/kgsl-3d0/force_clk_on
+# echo 10000000 >/sys/class/kgsl/kgsl-3d0/idle_timer
+# echo performance >/sys/class/kgsl/kgsl-3d0/devfreq/governor
+# echo [**want_clock**] > /sys/class/kgsl/kgsl-3d0/max_gpuclk
+# echo [**want_clock**] > /sys/class/kgsl/kgsl-3d0/gpuclk
 ```
 This will allow the su user to change the frequency. **force_clk_on** will set some flags. We disable GPU going into sleep by setting the **idle_timer** very high and use **performance** governor to set the frequency to the maximum specified by **max_gpuclk**. The reason why **userspace** governor is not used is that, even if **userspace** governor sets the frequency level at some point, the frequency level will change by some other features in the Adreno GPU while running some GPU kernels. Linux Kernel modification is required to maintain a fixed frequency by the **userspace** governor, so instead, we use this workaround.

@@ -1,0 +1,407 @@
+adbd is already running as root
+---Test 1 for frequency 624000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.114176ms
+  depthwise_convolution 2 linked : relu 3 - 0.172032ms
+  convolution_2d 4 linked : relu 5 - 0.332800ms
+  depthwise_convolution 6 linked : relu 7 - 0.180992ms
+  convolution_2d 8 linked : relu 9 - 0.295936ms
+  depthwise_convolution 10 linked : relu 11 - 0.162048ms
+  convolution_2d 12 linked : relu 13 - 0.568064ms
+  depthwise_convolution 14 linked : relu 15 - 0.089088ms
+  convolution_2d 16 linked : relu 17 - 0.295168ms
+  depthwise_convolution 18 linked : relu 19 - 0.094976ms
+  convolution_2d 20 linked : relu 21 - 0.583936ms
+  depthwise_convolution 22 linked : relu 23 - 0.058112ms
+  convolution_2d 24 linked : relu 25 - 0.331008ms
+  depthwise_convolution 26 linked : relu 27 - 0.051968ms
+  convolution_2d 28 linked : relu 29 - 0.629248ms
+  depthwise_convolution 30 linked : relu 31 - 0.058112ms
+  convolution_2d 32 linked : relu 33 - 0.621056ms
+  depthwise_convolution 34 linked : relu 35 - 0.056064ms
+  convolution_2d 36 linked : relu 37 - 0.626176ms
+  depthwise_convolution 38 linked : relu 39 - 0.058880ms
+  convolution_2d 40 linked : relu 41 - 0.620032ms
+  depthwise_convolution 42 linked : relu 43 - 0.050944ms
+  convolution_2d 44 linked : relu 45 - 0.663040ms
+  depthwise_convolution 46 linked : relu 47 - 0.034816ms
+  convolution_2d 48 linked : relu 49 - 0.403968ms
+  depthwise_convolution 50 linked : relu 51 - 0.032000ms
+  convolution_2d 52 linked : relu 53 - 0.802048ms
+  pooling_2d 54 - 0.016896ms
+  fully_connected 55 - 0.113920ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 6.886656ms
+  depthwise_convolution - 1.100032ms
+  fully_connected - 0.113920ms
+  pooling_2d - 0.016896ms
+--------------------
+Ideal total time: 8.117504
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 8.21362ms
+Total time - 8.18582ms
+Total time - 8.20774ms
+Total time - 8.21418ms
+Total time - 8.21162ms
+Total time - 8.22159ms
+Total time - 8.21126ms
+Total time - 8.21052ms
+Total time - 8.22583ms
+Total time - 8.21787ms
+---Test 2 for frequency 560000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.122880ms
+  depthwise_convolution 2 linked : relu 3 - 0.184064ms
+  convolution_2d 4 linked : relu 5 - 0.366848ms
+  depthwise_convolution 6 linked : relu 7 - 0.204032ms
+  convolution_2d 8 linked : relu 9 - 0.327936ms
+  depthwise_convolution 10 linked : relu 11 - 0.189952ms
+  convolution_2d 12 linked : relu 13 - 0.641024ms
+  depthwise_convolution 14 linked : relu 15 - 0.103168ms
+  convolution_2d 16 linked : relu 17 - 0.329984ms
+  depthwise_convolution 18 linked : relu 19 - 0.110080ms
+  convolution_2d 20 linked : relu 21 - 0.647936ms
+  depthwise_convolution 22 linked : relu 23 - 0.061952ms
+  convolution_2d 24 linked : relu 25 - 0.349952ms
+  depthwise_convolution 26 linked : relu 27 - 0.066048ms
+  convolution_2d 28 linked : relu 29 - 0.689920ms
+  depthwise_convolution 30 linked : relu 31 - 0.061184ms
+  convolution_2d 32 linked : relu 33 - 0.688896ms
+  depthwise_convolution 34 linked : relu 35 - 0.058880ms
+  convolution_2d 36 linked : relu 37 - 0.689152ms
+  depthwise_convolution 38 linked : relu 39 - 0.065024ms
+  convolution_2d 40 linked : relu 41 - 0.699904ms
+  depthwise_convolution 42 linked : relu 43 - 0.062976ms
+  convolution_2d 44 linked : relu 45 - 0.695040ms
+  depthwise_convolution 46 linked : relu 47 - 0.039936ms
+  convolution_2d 48 linked : relu 49 - 0.449024ms
+  depthwise_convolution 50 linked : relu 51 - 0.035072ms
+  convolution_2d 52 linked : relu 53 - 0.905984ms
+  pooling_2d 54 - 0.018944ms
+  fully_connected 55 - 0.132096ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 7.604480ms
+  depthwise_convolution - 1.242368ms
+  fully_connected - 0.132096ms
+  pooling_2d - 0.018944ms
+--------------------
+Ideal total time: 8.997888
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 9.08832ms
+Total time - 9.08084ms
+Total time - 9.07066ms
+Total time - 9.074ms
+Total time - 9.0848ms
+Total time - 9.05858ms
+Total time - 9.04064ms
+Total time - 9.0708ms
+Total time - 9.0721ms
+Total time - 9.06528ms
+---Test 3 for frequency 510000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.146944ms
+  depthwise_convolution 2 linked : relu 3 - 0.210944ms
+  convolution_2d 4 linked : relu 5 - 0.401152ms
+  depthwise_convolution 6 linked : relu 7 - 0.237824ms
+  convolution_2d 8 linked : relu 9 - 0.360960ms
+  depthwise_convolution 10 linked : relu 11 - 0.211200ms
+  convolution_2d 12 linked : relu 13 - 0.701184ms
+  depthwise_convolution 14 linked : relu 15 - 0.131840ms
+  convolution_2d 16 linked : relu 17 - 0.367104ms
+  depthwise_convolution 18 linked : relu 19 - 0.129792ms
+  convolution_2d 20 linked : relu 21 - 0.712192ms
+  depthwise_convolution 22 linked : relu 23 - 0.082176ms
+  convolution_2d 24 linked : relu 25 - 0.384000ms
+  depthwise_convolution 26 linked : relu 27 - 0.080896ms
+  convolution_2d 28 linked : relu 29 - 0.773120ms
+  depthwise_convolution 30 linked : relu 31 - 0.079104ms
+  convolution_2d 32 linked : relu 33 - 0.766976ms
+  depthwise_convolution 34 linked : relu 35 - 0.069120ms
+  convolution_2d 36 linked : relu 37 - 0.804864ms
+  depthwise_convolution 38 linked : relu 39 - 0.079104ms
+  convolution_2d 40 linked : relu 41 - 0.772864ms
+  depthwise_convolution 42 linked : relu 43 - 0.077056ms
+  convolution_2d 44 linked : relu 45 - 0.762880ms
+  depthwise_convolution 46 linked : relu 47 - 0.050176ms
+  convolution_2d 48 linked : relu 49 - 0.489984ms
+  depthwise_convolution 50 linked : relu 51 - 0.041984ms
+  convolution_2d 52 linked : relu 53 - 0.985088ms
+  pooling_2d 54 - 0.022784ms
+  fully_connected 55 - 0.182016ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 8.429312ms
+  depthwise_convolution - 1.481216ms
+  fully_connected - 0.182016ms
+  pooling_2d - 0.022784ms
+--------------------
+Ideal total time: 10.115328
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 10.2183ms
+Total time - 10.2229ms
+Total time - 10.2186ms
+Total time - 10.2218ms
+Total time - 10.2245ms
+Total time - 10.2197ms
+Total time - 10.229ms
+Total time - 10.263ms
+Total time - 10.2637ms
+Total time - 10.245ms
+---Test 4 for frequency 401800000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.193792ms
+  depthwise_convolution 2 linked : relu 3 - 0.281088ms
+  convolution_2d 4 linked : relu 5 - 0.521984ms
+  depthwise_convolution 6 linked : relu 7 - 0.320000ms
+  convolution_2d 8 linked : relu 9 - 0.463872ms
+  depthwise_convolution 10 linked : relu 11 - 0.285184ms
+  convolution_2d 12 linked : relu 13 - 0.894976ms
+  depthwise_convolution 14 linked : relu 15 - 0.167936ms
+  convolution_2d 16 linked : relu 17 - 0.464128ms
+  depthwise_convolution 18 linked : relu 19 - 0.169984ms
+  convolution_2d 20 linked : relu 21 - 0.909056ms
+  depthwise_convolution 22 linked : relu 23 - 0.104960ms
+  convolution_2d 24 linked : relu 25 - 0.498944ms
+  depthwise_convolution 26 linked : relu 27 - 0.109056ms
+  convolution_2d 28 linked : relu 29 - 0.977920ms
+  depthwise_convolution 30 linked : relu 31 - 0.110080ms
+  convolution_2d 32 linked : relu 33 - 0.983040ms
+  depthwise_convolution 34 linked : relu 35 - 0.109056ms
+  convolution_2d 36 linked : relu 37 - 0.980992ms
+  depthwise_convolution 38 linked : relu 39 - 0.100864ms
+  convolution_2d 40 linked : relu 41 - 0.978176ms
+  depthwise_convolution 42 linked : relu 43 - 0.096000ms
+  convolution_2d 44 linked : relu 45 - 0.978176ms
+  depthwise_convolution 46 linked : relu 47 - 0.065024ms
+  convolution_2d 48 linked : relu 49 - 0.637952ms
+  depthwise_convolution 50 linked : relu 51 - 0.053248ms
+  convolution_2d 52 linked : relu 53 - 1.275136ms
+  pooling_2d 54 - 0.029952ms
+  fully_connected 55 - 0.243968ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 10.758144ms
+  depthwise_convolution - 1.972480ms
+  fully_connected - 0.243968ms
+  pooling_2d - 0.029952ms
+--------------------
+Ideal total time: 13.004544
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 13.0867ms
+Total time - 13.0994ms
+Total time - 13.0928ms
+Total time - 13.1062ms
+Total time - 13.1461ms
+Total time - 13.1107ms
+Total time - 13.1228ms
+Total time - 13.1129ms
+Total time - 13.1177ms
+Total time - 13.1051ms
+---Test 5 for frequency 315000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.236032ms
+  depthwise_convolution 2 linked : relu 3 - 0.347136ms
+  convolution_2d 4 linked : relu 5 - 0.661248ms
+  depthwise_convolution 6 linked : relu 7 - 0.387072ms
+  convolution_2d 8 linked : relu 9 - 0.587008ms
+  depthwise_convolution 10 linked : relu 11 - 0.350976ms
+  convolution_2d 12 linked : relu 13 - 1.126912ms
+  depthwise_convolution 14 linked : relu 15 - 0.220160ms
+  convolution_2d 16 linked : relu 17 - 0.582912ms
+  depthwise_convolution 18 linked : relu 19 - 0.215040ms
+  convolution_2d 20 linked : relu 21 - 1.148928ms
+  depthwise_convolution 22 linked : relu 23 - 0.134144ms
+  convolution_2d 24 linked : relu 25 - 0.621824ms
+  depthwise_convolution 26 linked : relu 27 - 0.135936ms
+  convolution_2d 28 linked : relu 29 - 1.230080ms
+  depthwise_convolution 30 linked : relu 31 - 0.130048ms
+  convolution_2d 32 linked : relu 33 - 1.229056ms
+  depthwise_convolution 34 linked : relu 35 - 0.131072ms
+  convolution_2d 36 linked : relu 37 - 1.231104ms
+  depthwise_convolution 38 linked : relu 39 - 0.139008ms
+  convolution_2d 40 linked : relu 41 - 1.238016ms
+  depthwise_convolution 42 linked : relu 43 - 0.141056ms
+  convolution_2d 44 linked : relu 45 - 1.239040ms
+  depthwise_convolution 46 linked : relu 47 - 0.088832ms
+  convolution_2d 48 linked : relu 49 - 0.792064ms
+  depthwise_convolution 50 linked : relu 51 - 0.065024ms
+  convolution_2d 52 linked : relu 53 - 1.600000ms
+  pooling_2d 54 - 0.036864ms
+  fully_connected 55 - 0.324096ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 13.524224ms
+  depthwise_convolution - 2.485504ms
+  fully_connected - 0.324096ms
+  pooling_2d - 0.036864ms
+--------------------
+Ideal total time: 16.370688
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 16.5239ms
+Total time - 16.5616ms
+Total time - 16.566ms
+Total time - 16.559ms
+Total time - 16.5414ms
+Total time - 16.5169ms
+Total time - 16.572ms
+Total time - 16.5367ms
+Total time - 16.5372ms
+Total time - 16.5394ms
+---Test 6 for frequency 214000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.403968ms
+  depthwise_convolution 2 linked : relu 3 - 0.642048ms
+  convolution_2d 4 linked : relu 5 - 1.064960ms
+  depthwise_convolution 6 linked : relu 7 - 0.690944ms
+  convolution_2d 8 linked : relu 9 - 0.892928ms
+  depthwise_convolution 10 linked : relu 11 - 0.605184ms
+  convolution_2d 12 linked : relu 13 - 1.732096ms
+  depthwise_convolution 14 linked : relu 15 - 0.386048ms
+  convolution_2d 16 linked : relu 17 - 0.892160ms
+  depthwise_convolution 18 linked : relu 19 - 0.370944ms
+  convolution_2d 20 linked : relu 21 - 1.744896ms
+  depthwise_convolution 22 linked : relu 23 - 0.230912ms
+  convolution_2d 24 linked : relu 25 - 0.974080ms
+  depthwise_convolution 26 linked : relu 27 - 0.236032ms
+  convolution_2d 28 linked : relu 29 - 1.965824ms
+  depthwise_convolution 30 linked : relu 31 - 0.226048ms
+  convolution_2d 32 linked : relu 33 - 1.929984ms
+  depthwise_convolution 34 linked : relu 35 - 0.229888ms
+  convolution_2d 36 linked : relu 37 - 1.954048ms
+  depthwise_convolution 38 linked : relu 39 - 0.240896ms
+  convolution_2d 40 linked : relu 41 - 1.950976ms
+  depthwise_convolution 42 linked : relu 43 - 0.220160ms
+  convolution_2d 44 linked : relu 45 - 1.939968ms
+  depthwise_convolution 46 linked : relu 47 - 0.151040ms
+  convolution_2d 48 linked : relu 49 - 1.219840ms
+  depthwise_convolution 50 linked : relu 51 - 0.104960ms
+  convolution_2d 52 linked : relu 53 - 2.502144ms
+  pooling_2d 54 - 0.059904ms
+  fully_connected 55 - 0.585984ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 21.167872ms
+  depthwise_convolution - 4.335104ms
+  fully_connected - 0.585984ms
+  pooling_2d - 0.059904ms
+--------------------
+Ideal total time: 26.148864
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 26.4208ms
+Total time - 26.4713ms
+Total time - 26.4867ms
+Total time - 26.4114ms
+Total time - 26.4892ms
+Total time - 26.4385ms
+Total time - 26.408ms
+Total time - 26.4478ms
+Total time - 26.074ms
+Total time - 26.4511ms
+---Test 7 for frequency 133000000---
+INFO: Initialized TensorFlow Lite runtime.
+ERROR: Following operations are not supported by GPU delegate:
+SQUEEZE: Operation is not supported.
+29 operations will run on the GPU, and the remaining 2 operations will run on the CPU.
+Precision: CalculationsPrecision::F16
+Storage type: TensorStorageType::TEXTURE_2D
+Per kernel timing(29 kernels):
+  convolution_2d 0 linked : relu 1 - 0.658176ms
+  depthwise_convolution 2 linked : relu 3 - 0.952832ms
+  convolution_2d 4 linked : relu 5 - 1.658112ms
+  depthwise_convolution 6 linked : relu 7 - 1.078016ms
+  convolution_2d 8 linked : relu 9 - 1.423104ms
+  depthwise_convolution 10 linked : relu 11 - 0.933120ms
+  convolution_2d 12 linked : relu 13 - 2.728192ms
+  depthwise_convolution 14 linked : relu 15 - 0.592896ms
+  convolution_2d 16 linked : relu 17 - 1.422080ms
+  depthwise_convolution 18 linked : relu 19 - 0.564224ms
+  convolution_2d 20 linked : relu 21 - 2.778880ms
+  depthwise_convolution 22 linked : relu 23 - 0.368896ms
+  convolution_2d 24 linked : relu 25 - 1.524992ms
+  depthwise_convolution 26 linked : relu 27 - 0.350976ms
+  convolution_2d 28 linked : relu 29 - 3.059200ms
+  depthwise_convolution 30 linked : relu 31 - 0.337152ms
+  convolution_2d 32 linked : relu 33 - 3.001856ms
+  depthwise_convolution 34 linked : relu 35 - 0.335104ms
+  convolution_2d 36 linked : relu 37 - 2.995968ms
+  depthwise_convolution 38 linked : relu 39 - 0.349952ms
+  convolution_2d 40 linked : relu 41 - 3.020032ms
+  depthwise_convolution 42 linked : relu 43 - 0.336896ms
+  convolution_2d 44 linked : relu 45 - 3.000832ms
+  depthwise_convolution 46 linked : relu 47 - 0.220160ms
+  convolution_2d 48 linked : relu 49 - 1.939968ms
+  depthwise_convolution 50 linked : relu 51 - 0.174080ms
+  convolution_2d 52 linked : relu 53 - 3.860224ms
+  pooling_2d 54 - 0.094976ms
+  fully_connected 55 - 0.898816ms
+--------------------
+Accumulated time per operation type:
+  convolution_2d - 33.071616ms
+  depthwise_convolution - 6.594304ms
+  fully_connected - 0.898816ms
+  pooling_2d - 0.094976ms
+--------------------
+Ideal total time: 40.659712
+--------------------
+
+Memory for intermediate tensors - 7.03805 MB
+Total time - 41.0997ms
+Total time - 41.0809ms
+Total time - 41.0912ms
+Total time - 41.0227ms
+Total time - 40.6078ms
+Total time - 41.0369ms
+Total time - 41.1552ms
+Total time - 41.1078ms
+Total time - 40.9653ms
+Total time - 40.6767ms

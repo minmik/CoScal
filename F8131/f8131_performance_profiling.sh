@@ -26,6 +26,7 @@ adb root
 
 if [ ! $(adb shell "su -c '[ -e $BENCHMARK_EXE ] && echo 1'") ]; then
     adb push $HOST_EXE $BENCHMARK_EXE
+	adb shell "su -c 'chmod 777 > $BENCHMARK_EXE'"
 fi
 
 if [ ! $(adb shell "su -c '[ -e $BENCHMARK_GRAPH ] && echo 1'") ]; then

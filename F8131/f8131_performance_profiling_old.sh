@@ -16,7 +16,7 @@ BENCHMARK_DIR="/data/local/tmp"
 BENCHMARK_EXE="$BENCHMARK_DIR/$EXE_NAME"
 BENCHMARK_GRAPH="$BENCHMARK_DIR/$GRAPH_NAME"
 #BENCHMARK_OPT="--use_gpu=true --use_fp16=true --num_runs=100"
-#BENCHMARK_POST="| grep avg"
+#BENCHMARK_POST="| grep Total"
 BENCHMARK="$BENCHMARK_EXE $BENCHMARK_GRAPH $BENCHMARK_OPT $BENCHMARK_POST"
 # Do not allow any error
 
@@ -34,7 +34,8 @@ if [ ! $(adb shell "su -c '[ -e $BENCHMARK_GRAPH ] && echo 1'") ]; then
 fi
 
 #fix gpubw to max
-#adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo userspace > governor'"
+adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo performance > governor'"
+adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,cpubw && echo performance > governor'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu0/online'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu1/online'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu2/online'"
@@ -47,39 +48,30 @@ adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scalin
 adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor'"
 adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor'"
 
-adb shell "su -c 'echo 0 > $SYSFS_DIR/bus_split'"
-#adb shell "su -c 'echo 1 > $SYSFS_DIR/force_bus_on'"
+#adb shell "su -c 'echo 0 > $SYSFS_DIR/bus_split'"
 adb shell "su -c 'echo 1 > $SYSFS_DIR/force_clk_on'"
 adb shell "su -c 'echo 10000000 > $SYSFS_DIR/idle_timer'"
-#adb shell "su -c 'echo performance > $SYSFS_DIR/devfreq/governor'"
+adb shell "su -c 'echo  > $SYSFS_DIR/devfreq/governor'"
 # userspace governor not working
 # adb shell "su -c 'echo userspace > $SYSFS_DIR/devfreq/governor'"
 IFS=' ' read -r -a freq_array <<< $(adb shell "su -c 'cat /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies'")
-IFS=' ' read -r -a bw_array <<< $(adb shell "su -c 'cat /sys/class/devfreq/soc\:qcom,gpubw/available_frequencies'")
+#IFS=' ' read -r -a bw_array <<< $(adb shell "su -c 'cat /sys/class/devfreq/soc\:qcom,gpubw/available_frequencies'")
 
-pwrlevel=0
-iter=1
+iter=0
 for freq in "${freq_array[@]}"
 do
-	for bw in "${bw_array[@]}"
-	do
-		if (( $bw > 0 )); then
-			adb shell "su -c 'echo $bw > /sys/class/devfreq/soc\:qcom,gpubw/min_freq'"
-			adb shell "su -c 'echo $bw > /sys/class/devfreq/soc\:qcom,gpubw/max_freq'"
-			adb shell "su -c 'echo $bw > /sys/class/devfreq/soc\:qcom,gpubw/min_freq'"
-    		adb shell "su -c 'echo $freq > $SYSFS_DIR/devfreq/min_freq'"
-    		adb shell "su -c 'echo $freq > $SYSFS_DIR/devfreq/max_freq'"
-    		adb shell "su -c 'echo $freq > $SYSFS_DIR/devfreq/min_freq'"
-    		adb shell "su -c 'echo $pwrlevel > $SYSFS_DIR/min_pwrlevel'"
-			adb shell "su -c 'echo $pwrlevel > $SYSFS_DIR/max_pwrlevel'"
-    		adb shell "su -c 'echo $pwrlevel > $SYSFS_DIR/min_pwrlevel'"
-			echo "---Test $iter for frequency $freq and bw $bw---"
-			adb shell "su -c 'sleep 1'"
+#	for bw in "${bw_array[@]}"
+#	do
+#		if (( $bw > 0 )); then
+    		adb shell "su -c 'echo $iter > $SYSFS_DIR/min_pwrlevel'"
+    		adb shell "su -c 'echo $iter > $SYSFS_DIR/max_pwrlevel'"
+#			adb shell "su -c 'echo $bw > /sys/class/devfreq/soc\:qcom,gpubw/max_freq'"
+#			adb shell "su -c 'echo $bw > /sys/class/devfreq/soc\:qcom,gpubw/min_freq'"
+    		echo "--------Test $iter for frequency $freq--------"
     		adb shell "su -c '$BENCHMARK'"
-			adb shell "su -c 'sleep 1'"
-			let iter=$iter+1
-		fi	
-	done
-	let pwrlevel=$pwrlevel+1
+    		let iter=$iter+1
+			sleep 1
+	#	fi	
+#	done
 done
 

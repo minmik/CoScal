@@ -34,8 +34,10 @@ if [ ! $(adb shell "su -c '[ -e $BENCHMARK_GRAPH ] && echo 1'") ]; then
 fi
 
 #fix gpubw to max
-adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo performance > governor'"
-adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,cpubw && echo performance > governor'"
+#adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,cpubw && echo performance > governor'"
+adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo 1144 > min_freq'"
+adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo 1144 > max_freq'"
+adb shell "su -c 'cd /sys/class/devfreq/soc\:qcom,gpubw && echo 1144 > min_freq'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu0/online'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu1/online'"
 adb shell "su -c 'echo 1 > /sys/devices/system/cpu/cpu2/online'"
@@ -48,7 +50,7 @@ adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scalin
 adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor'"
 adb shell "su -c 'echo performance > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor'"
 
-#adb shell "su -c 'echo 0 > $SYSFS_DIR/bus_split'"
+adb shell "su -c 'echo 1 > $SYSFS_DIR/bus_split'"
 adb shell "su -c 'echo 1 > $SYSFS_DIR/force_clk_on'"
 adb shell "su -c 'echo 10000000 > $SYSFS_DIR/idle_timer'"
 adb shell "su -c 'echo  > $SYSFS_DIR/devfreq/governor'"

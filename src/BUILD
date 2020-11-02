@@ -16,3 +16,21 @@ cc_binary(
         "@com_google_absl//absl/time",
     ],
 )
+
+cc_binary(
+    name = "dvfs",
+    srcs = [
+            "dvfs.cc",
+            "dvfs.h"
+            ],
+    deps = [
+        "//tensorflow/lite/delegates/gpu/cl:environment",
+        "//tensorflow/lite/delegates/gpu/cl:inference_context",
+        "//tensorflow/lite/delegates/gpu/common:model",
+        "//tensorflow/lite/delegates/gpu/common:status",
+        "//tensorflow/lite/delegates/gpu/common/testing:tflite_model_reader",
+        "//tensorflow/lite/kernels:builtin_ops",
+        "@com_google_absl//absl/time",
+    ],
+)
+

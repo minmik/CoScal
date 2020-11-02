@@ -46,6 +46,63 @@ int write_to_file(const std::string path, const std::string value) {
     return result;
 }
 
+GPUExecution::GPUExecution(const std::string _model_name, double target) {
+    model_name = _model_name;
+    currentCoreFreqIndex = -1;
+    currentBusFreqIndex = -1;
+    executionTime = 0.0;
+    latencyTarget = target;
+    
+    /* Maybe will be used in mixbench
+    opIntensity = 4.75;
+    coreBenchResults = new Performance[numCoreFreq];
+    busBenchResults = new Performance[numBusFreq];
+    */
+
+    coreBenchResults_ms = new double[numCoreFreq];
+    busBenchResults_ms = new double[numBusFreq];
+
+    // Set some environments
+    flatbuffer = tflite::FlatBufferModel::BuildFromFile(model_name.c_str());
+    EXIT_IF_ERROR(BuildFromFlatBuffer(*flatbuffer, op_resolver, &graph_cl));
+    
+    EXIT_IF_ERROR(CreateEnvironment(&env));
+    create_info.precision = env.IsSupported(CalculationsPrecision::F16)
+                                ? CalculationsPrecision::F16
+                                : CalculationsPrecision::F32;
+    create_info.storage_type = GetFastestStorageType(env.device());
+    std::cout << "Precision: " << ToString(create_info.precision) << std::endl;
+    std::cout << "Storage type: " << ToString(create_info.storage_type)
+            << std::endl;
+    EXIT_IF_ERROR(
+        context.InitFromGraphWithTransforms(create_info, &graph_cl, &env));
+
+
+    if(set_gpu_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting GPU to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_to_max() == -1) {
+        std::cerr << "Something went wrong when setting GPU to level 0, 0"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+
+    EXIT_IF_ERROR(RunModelSample());
+
+    // Latency Target Lowering when target unachievable
+    if(currentCoreFreqIndex == 0 && currentBusFreqIndex == 0 && executionTime > latencyTarget) {
+        double oldTarget = latencyTarget;
+        while(executionTime > latencyTarget) {
+            latencyTarget *= 2.0f;
+        }
+        std::cerr << "Latency Target " << oldTarget << " unachievable, " <<
+                    "lowering the latency target to " << latencyTarget << std::endl;
+    }
+}
+
+
 int GPUExecution::set_gpu_performance_mode(void) {
     int result = -1;
 #if defined(F8131) || defined(FLAME)
@@ -54,14 +111,14 @@ int GPUExecution::set_gpu_performance_mode(void) {
     result += write_to_file(GPU_SYSFS_PATH + "/force_bus_on", "1");
     result += write_to_file(GPU_SYSFS_PATH + "/force_clk_on", "1");
     result += write_to_file(GPU_SYSFS_PATH + "/force_rail_on", "1");
-    result += write_to_file(GPU_SYSFS_PATH + "/idle_time", "10000000");
+    result += write_to_file(GPU_SYSFS_PATH + "/idle_timer", "10000000");
     result += write_to_file(GPU_SYSFS_PATH + "/devfreq/governor", "performance");
     result += write_to_file(GPU_GPUBW_PATH + "/governor", "performance");
 #endif
     return result < 0 ? -1 : 0; 
 }
 
-int GPUExecution::set_gpu_to_max(void) {
+inline int GPUExecution::set_gpu_to_max(void) {
     return set_gpu_to_level(0, 0);
 }
 
@@ -106,103 +163,124 @@ int GPUExecution::set_gpu_to_level(int core_index, int bus_index) {
 }
 
 
-void GPUExecution::perform_microbenchmark(void) {
-    ///!!!!!!!!!!!!!!!TEMPORARY?????????????????????????????????
-    #ifdef F8131
-        coreBenchResults[0] = Performance(15.4, 73.17);
-        coreBenchResults[1] = Performance(14.81, 70.34);
-        coreBenchResults[2] = Performance(14.52, 68.97);
-        coreBenchResults[3] = Performance(12.99, 61.68);
-        coreBenchResults[4] = Performance(12.31, 58.49);
-        coreBenchResults[5] = Performance(9.47, 44.98);
-        coreBenchResults[6] = Performance(6.15, 29.19);
-        busBenchResults[0] = Performance(15.4, 73.17);
-        busBenchResults[1] = Performance(14.4, 68.39);
-        busBenchResults[2] = Performance(13.31, 63.22);
-        busBenchResults[3] = Performance(11.68, 55.48);
-        busBenchResults[4] = Performance(8.98, 42.66);
-        busBenchResults[5] = Performance(8.12, 38.57);
-        busBenchResults[6] = Performance(6.81, 32.37);
-        busBenchResults[7] = Performance(5.29, 25.13);
-        set_gpu_to_level(6,6);
-    #endif
+
+void GPUExecution::perform_benchmark(void) {
+    for(int i = 0; i < numCoreFreq; i++) {
+        if(set_gpu_to_level(i, 0) == -1) {
+            std::cerr << "Something went wrong when setting GPU to level " << i << ", 0"
+                << std::endl << "Check permission" << std::endl;
+            exit(-1);
+        }
+        EXIT_IF_ERROR(RunModelSample());
+        coreBenchResults_ms[i] = executionTime;
+    }
+
+    for(int j = 0; j < numBusFreq; j++) {
+        if(set_gpu_to_level(0, j) == -1) {
+            std::cerr << "Something went wrong when setting GPU to level 0, " << j
+                << std::endl << "Check permission" << std::endl;
+            exit(-1);
+        }
+        EXIT_IF_ERROR(RunModelSample());
+        busBenchResults_ms[j] = executionTime;
+    }
+
+    if(set_gpu_to_max() == -1) {
+        std::cerr << "Something went wrong when setting GPU to level 0, 0"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
 }
 
 
 
 void GPUExecution::fine_tune(void) {
-    RunModelSample();
+    EXIT_IF_ERROR(RunModelSample());
     while(executionTime > latencyTarget) {
         // scale up the frequency setting that is causing the bottleneck
+
+        // 1. When core is already max
         if (currentCoreFreqIndex == 0) {
+            // 1-1. When bus is also max
             if (currentBusFreqIndex == 0) {
                 std::cerr << "Latency Target " << latencyTarget << " unachievable, " <<
-                            "execution time now:  " << executionTime << std::endl;
-                std::cerr << "fine tuning failed" << std::endl; 
+                            "execution time now: " << executionTime << std::endl;
+                std::cerr << "fine tuning failed" << std::endl;
+                exit(-1);
             }
+            // 1-2. When bus is tunable
             else if (currentBusFreqIndex > 0 && currentBusFreqIndex < numBusFreq) {
-                set_gpu_to_level(currentCoreFreqIndex, currentBusFreqIndex - 1);
+                if(set_gpu_to_level(currentCoreFreqIndex, currentBusFreqIndex - 1) == -1) {
+                    std::cerr << "Something went wrong when setting GPU to level "
+                    << currentCoreFreqIndex<< ", " << currentBusFreqIndex - 1<< std::endl 
+                    << "Check permission" << std::endl;
+                    exit(-1);
+                }
             }
+            // 1-3. Error
             else {
                 std::cerr << "FATAL ERROR: Wrong bus freq index while fine tuning!!!" << std::endl;
                 exit(-1);
             }
         }
+
+        // 2. When core is tunable
         else if(currentCoreFreqIndex > 0 && currentCoreFreqIndex < numCoreFreq) {
+            // 2-1. When bus is max
             if(currentBusFreqIndex == 0) {
-                set_gpu_to_level(currentCoreFreqIndex  - 1, currentBusFreqIndex);
+                if(set_gpu_to_level(currentCoreFreqIndex  - 1, currentBusFreqIndex) == -1){
+                    std::cerr << "Something went wrong when setting GPU to level "
+                    << currentCoreFreqIndex - 1<< ", " << currentBusFreqIndex<< std::endl 
+                    << "Check permission" << std::endl;
+                    exit(-1);
+                }
             }
+            // 2-2. When bus is also tunable
             else if(currentBusFreqIndex > 0 && currentBusFreqIndex < numBusFreq) {
-                if(coreBenchResults[currentCoreFreqIndex - 1].computation <= 
-                    busBenchResults[currentBusFreqIndex - 1].computation) {
-                    set_gpu_to_level(currentCoreFreqIndex  - 1, currentBusFreqIndex);
+                //core is being the bottleneck
+                if(coreBenchResults_ms[currentCoreFreqIndex] >= busBenchResults_ms[currentBusFreqIndex]) {
+                    if(set_gpu_to_level(currentCoreFreqIndex  - 1, currentBusFreqIndex) == -1){
+                        std::cerr << "Something went wrong when setting GPU to level "
+                        << currentCoreFreqIndex - 1<< ", " << currentBusFreqIndex<< std::endl 
+                        << "Check permission" << std::endl;
+                        exit(-1);
+                    }
                 }
+                //bus is being the bottleneck
                 else {
-                    set_gpu_to_level(currentCoreFreqIndex, currentBusFreqIndex - 1);
+                    if(set_gpu_to_level(currentCoreFreqIndex, currentBusFreqIndex - 1) == -1) {
+                        std::cerr << "Something went wrong when setting GPU to level "
+                        << currentCoreFreqIndex<< ", " << currentBusFreqIndex - 1<< std::endl 
+                        << "Check permission" << std::endl;
+                        exit(-1);
+                    }
                 }
             }
+            // 2-3. Error
             else {
                 std::cerr << "FATAL ERROR: Wrong bus freq index while fine tuning!!!" << std::endl;
                 exit(-1);
             }
         }
+
+        // 3. Error
         else {
             std::cerr << "FATAL ERROR: Wrong core freq index while fine tuning!!!" << std::endl;
             exit(-1);
         }
 
         // recompute executionTime
-        RunModelSample();
+        EXIT_IF_ERROR(RunModelSample());
     }
-    std::cout<< "Fine tuning: core " << coreFreq[currentCoreFreqIndex] <<
+    std::cout<< "Fine tuning done: core " << coreFreq[currentCoreFreqIndex] <<
                 " bus " << busFreq[currentBusFreqIndex] << std::endl;
 }
 
 
-
-
-
+// Run tflite model, copyright: Tensorflow Authors
+// Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
+// modified by Jongmin Kim
 absl::Status GPUExecution::RunModelSample(void) {
-    auto flatbuffer = tflite::FlatBufferModel::BuildFromFile(model_name.c_str());
-    GraphFloat32 graph_cl;
-    ops::builtin::BuiltinOpResolver op_resolver;
-    RETURN_IF_ERROR(BuildFromFlatBuffer(*flatbuffer, op_resolver, &graph_cl));
-
-    Environment env;
-    RETURN_IF_ERROR(CreateEnvironment(&env));
-
-    InferenceContext::CreateInferenceInfo create_info;
-    create_info.precision = env.IsSupported(CalculationsPrecision::F16)
-                                ? CalculationsPrecision::F16
-                                : CalculationsPrecision::F32;
-    create_info.storage_type = GetFastestStorageType(env.device());
-    std::cout << "Precision: " << ToString(create_info.precision) << std::endl;
-    std::cout << "Storage type: " << ToString(create_info.storage_type)
-            << std::endl;
-    InferenceContext context;
-    RETURN_IF_ERROR(
-        context.InitFromGraphWithTransforms(create_info, &graph_cl, &env));
-
     auto* queue = env.profiling_queue();
     ProfilingInfo profiling_info;
     RETURN_IF_ERROR(context.Profile(queue, &profiling_info));
@@ -215,51 +293,30 @@ absl::Status GPUExecution::RunModelSample(void) {
         1, static_cast<int>(1000.0f / absl::ToDoubleMilliseconds(
                                         profiling_info.GetTotalTime())));
 
-    //const int kNumRuns = 1;
-    //for (int i = 0; i < kNumRuns; ++i) {
+
     const auto start = std::chrono::high_resolution_clock::now();
     for (int k = 0; k < num_runs_per_sec; ++k) {
-        RETURN_IF_ERROR(context.AddToQueue(env.queue()));
+        EXIT_IF_ERROR(context.AddToQueue(env.queue()));
     }
     RETURN_IF_ERROR(env.queue()->WaitForCompletion());
     const auto end = std::chrono::high_resolution_clock::now();
+
+
     const double total_time_ms = (end - start).count() * 1e-6f;
     double average_inference_time = total_time_ms / num_runs_per_sec;
-    std::cout << "Total time - " << average_inference_time << "ms" << std::endl;
-    //}
+
+    std::cout << "Measured Latency - " << average_inference_time << "ms" << std::endl;
     executionTime = average_inference_time;
-    if(currentCoreFreqIndex == 0 && currentBusFreqIndex == 0 && executionTime > latencyTarget) {
-        double oldTarget = latencyTarget;
-        while(executionTime > latencyTarget) {
-            latencyTarget *= 2.0f;
-        }
-        std::cerr << "Latency Target " << oldTarget << " unachievable, " <<
-                    "lowering the latency target to " << latencyTarget << std::endl;
-    }
+
     return absl::OkStatus();
 }
 
-absl::Status GPUExecution::RunPeriodically(const std::string& model_name) {
-        auto flatbuffer = tflite::FlatBufferModel::BuildFromFile(model_name.c_str());
-    GraphFloat32 graph_cl;
-    ops::builtin::BuiltinOpResolver op_resolver;
-    RETURN_IF_ERROR(BuildFromFlatBuffer(*flatbuffer, op_resolver, &graph_cl));
 
-    Environment env;
-    RETURN_IF_ERROR(CreateEnvironment(&env));
-
-    InferenceContext::CreateInferenceInfo create_info;
-    create_info.precision = env.IsSupported(CalculationsPrecision::F16)
-                                ? CalculationsPrecision::F16
-                                : CalculationsPrecision::F32;
-    create_info.storage_type = GetFastestStorageType(env.device());
-    std::cout << "Precision: " << ToString(create_info.precision) << std::endl;
-    std::cout << "Storage type: " << ToString(create_info.storage_type)
-            << std::endl;
-    InferenceContext context;
-    RETURN_IF_ERROR(
-        context.InitFromGraphWithTransforms(create_info, &graph_cl, &env));
-
+// Run tflite model periodically, copyright: Tensorflow Authors
+// Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
+// modified by Jongmin Kim
+absl::Status GPUExecution::RunPeriodically(void) {
+   /*
     auto* queue = env.profiling_queue();
     ProfilingInfo profiling_info;
     RETURN_IF_ERROR(context.Profile(queue, &profiling_info));
@@ -274,7 +331,7 @@ absl::Status GPUExecution::RunPeriodically(const std::string& model_name) {
         while(true) {
             auto wake_time = std::chrono::high_resolution_clock::now() + 
                     std::chrono::miliseconds()
-            RETURN_IF_ERROR(context.AddToQueue(env.queue()));
+            EXIT_IF_ERROR(context.AddToQueue(env.queue()));
             std::this_thread::sleep_until(wake_time);
         }
     })
@@ -284,18 +341,18 @@ absl::Status GPUExecution::RunPeriodically(const std::string& model_name) {
     })
 
     vision_timer.join();
-    
+    */
     
     /*for (int k = 0; k < num_runs_per_sec; ++k) {
         RETURN_IF_ERROR(context.AddToQueue(env.queue()));
     }
     RETURN_IF_ERROR(env.queue()->WaitForCompletion());*/
-    const auto end = std::chrono::high_resolution_clock::now();
+    //const auto end = std::chrono::high_resolution_clock::now();
 
 
     return absl::OkStatus();
 }
-}
+
 
 } // namespace cl
 } // namespace gpu
@@ -303,7 +360,6 @@ absl::Status GPUExecution::RunPeriodically(const std::string& model_name) {
 
 int main(int argc, char** argv) {
     double target_latency_ms;
-    const std::string model_name;
 
     if (argc <= 1) {
         std::cerr << "Expected model path as second argument.";
@@ -323,23 +379,15 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    // Creates GPUExecution instance
+    // Notice: the constructor does a lot of job
     tflite::gpu::cl::GPUExecution execution(argv[1], target_latency_ms);
-    execution.set_gpu_performance_mode();
-    execution.set_gpu_to_max();
-
-    auto run_status = execution.RunModelSample();
-    if (!run_status.ok()) {
-        std::cerr << run_status.message();
-        return -1;
-    }
 
     // TODO
-    // microbenchmarking
-    execution.perform_microbenchmark();
+    // benchmarking
+    execution.perform_benchmark();
 
-    // should be automatically decided by microbenchmarking results
+    // should be automatically decided by benchmarking results
     execution.fine_tune();
 
-
-    execution.RunPeriodically();
 }

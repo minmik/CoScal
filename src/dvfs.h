@@ -29,17 +29,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-
-
 #ifndef DVFS_H
 #define DVFS_H
 
-#define F8131 1 // for test use
+#define FLAME 1 // for test use
+
+#define EXIT_IF_ERROR(s) {auto c=(s);if(!c.ok()){std::cerr << c.message();exit(-1);}}
 
 #include <fstream>
 #include <cstdlib>
+/*
 #include <thread>
 #include <functional>
+*/
 
 #include <algorithm>
 #include <chrono>  // NOLINT(build/c++11)
@@ -110,7 +112,7 @@ const std::string coreFreq [5] = {"585000000",
                                 "499200000",
                                 "427000000",
                                 "345000000",
-                                "257000000"};                                };
+                                "257000000"};
 // available bus frequencies in descending order
 const std::string busFreq [11] = {"7980",
                                 "6881",
@@ -142,26 +144,19 @@ public:
     /**
      * @brief  measured performance in microbenchmark
      */
+
+    /* MAYBE will be used in mixbench
     struct Performance {
         float computation; //< computation perforamnce in GFLOPS
         float bandwidth;   //< bandwitdth in GB/sec
     };
+    */
 
     GPUExecution() = delete;
-    GPUExecution(const std::string _model_name, double target) {
-        model_name = _model_name;
-        currentCoreFreqIndex = -1;
-        currentBusFreqIndex = -1;
-        executionTime = 0.0;
-        latencyTarget = target;
-        opIntensity = 4.75;
-
-        coreBenchResults = new Performance[numCoreFreq];
-        busBenchResults = new Performance[numBusFreq];
-    };
+    GPUExecution(const std::string _model_name, double target);
     ~GPUExecution() {
-        delete[] coreBenchResults;
-        delete[] busBenchResults;
+        delete[] coreBenchResults_ms;
+        delete[] busBenchResults_ms;
     };
     
     // forbid copy or move
@@ -183,7 +178,7 @@ public:
      * @return 0  successful 
      * @return -1  some error happened during the process (likely to be a permission error) 
      */
-    int set_gpu_to_max(void);
+    inline int set_gpu_to_max(void);
 
     /**
      * @brief  set GPU frequencies to certain level
@@ -195,43 +190,65 @@ public:
      */
     int set_gpu_to_level(int core_index, int bus_index);
 
+    /**
+     * @brief  run the model for some frequency settings for benchmarking
+     */
+    void perform_benchmark(void);
 
-
-    void perform_microbenchmark(void);
-
-
+    /**
+     * @brief  fine tune the GPU frequency.
+     */
     void fine_tune(void);
-
 
     // Run tflite model, copyright: Tensorflow Authors
     // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
     // modified by Jongmin Kim
     /**
      * @brief  Run the Model on GPU using Tensorflow APIs
-     * @param model_name  file name of the model (should be in the same directory)
      *
      * @return absl::OkStatus()  if successful, returns error otherwise
      */
     absl::Status RunModelSample(void);
 
+
+    // Run tflite model, copyright: Tensorflow Authors
+    // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
+    // modified by Jongmin Kim
+    /**
+     * @brief  Run the Model on GPU on a specific interval using Tensorflow APIs simulating continuous vision workload
+     *
+     * @return absl::OkStatus()  if successful, returns error otherwise
+     */
     absl::Status RunPeriodically(void);
 
 private:
-    const std::string model_name;       //< model file name ***.tflite
+    std::string model_name;       //< model file name ***.tflite
     int currentCoreFreqIndex;           //< current index for coreFreq
     int currentBusFreqIndex;            //< current index for busFreq
     double executionTime;               //< execution latency for current settings in ms
     double latencyTarget;               //< latency target for GPU execution in ms
 
+    // Tensorflow environment related variables
+    std::unique_ptr<FlatBufferModel> flatbuffer; //< Flat BUffer Model
+    GraphFloat32 graph_cl;
+    ops::builtin::BuiltinOpResolver op_resolver;
+    Environment env;
+    InferenceContext context;
+    InferenceContext::CreateInferenceInfo create_info;
+
+
+    /* MAYBE will be used in mixbench
     double opIntensity;                 //< Operational intensity for microbenchmarking
                                         //  Operations/byte
     Performance * coreBenchResults;     //< measured performance for core DVFS microbenchmarking
     Performance * busBenchResults;      //< measured performance for bus DVFS microbenchmarking
+    */
+    double* coreBenchResults_ms;        //< measured latency for core DVFS benchmark
+    double* busBenchResults_ms;         //< measrued latency for bus DVFS benchmark
 };
 
-}
-}
-}
-
+} //namespace cl
+} //namespace gpu
+} //namespace tflite
 
 #endif // DVFS_H_INCLUDED

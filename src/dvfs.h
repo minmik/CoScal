@@ -32,21 +32,22 @@ limitations under the License.
 #ifndef DVFS_H
 #define DVFS_H
 
-#define FLAME 1 // for test use
+#define F8131 1 // for test use
 
 #define EXIT_IF_ERROR(s) {auto c=(s);if(!c.ok()){std::cerr << c.message();exit(-1);}}
 
 #include <fstream>
 #include <cstdlib>
-/*
+
 #include <thread>
-#include <functional>
-*/
+//#include <functional>
+
 
 #include <algorithm>
 #include <chrono>  // NOLINT(build/c++11)
 #include <iostream>
 #include <string>
+#include <time.h>
 
 #include "absl/time/time.h"
 #include "tensorflow/lite/delegates/gpu/cl/environment.h"
@@ -63,6 +64,7 @@ namespace cl {
 // Sony Xperia X Performance
 // Snapdragon 820, Adreno 530 GPU
 #ifdef F8131
+const std::string CPU_SYSFS_PATH = "/sys/devices/system/cpu";
 const std::string GPU_SYSFS_PATH = "/sys/class/kgsl/kgsl-3d0"; //< path for core sysfs
 const std::string GPU_GPUBW_PATH = "/sys/class/devfreq/soc:qcom,gpubw"; //< path for bus devfreq
 // available GPU core frequencies can be found at "GPU_SYSFS_PATH/available_frequencies"
@@ -98,6 +100,7 @@ const std::string busFreq [12] = {"13763",
 // Pixel 4
 // Snapdragon 855, Adreno 640v2 GPU
 #ifdef FLAME
+const std::string CPU_SYSFS_PATH = "/sys/devices/system/cpu";
 const std::string GPU_SYSFS_PATH = "/sys/class/kgsl/kgsl-3d0"; //< path for core sysfs
 const std::string GPU_GPUBW_PATH = "/sys/class/devfreq/soc:qcom,gpubw"; //< path for bus devfreq
 // available GPU core frequencies can be found at "GPU_SYSFS_PATH/available_frequencies"
@@ -137,6 +140,16 @@ const std::string busFreq [11] = {"7980",
  * @return -1  some error happened during the process (likely to be a permission error) 
  */
 int write_to_file(const std::string path, const std::string value);
+
+// Run tflite model, copyright: Tensorflow Authors
+// Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
+// modified by Jongmin Kim
+/**
+ * @brief  Run the Model on GPU on a specific interval using Tensorflow APIs simulating continuous vision workload
+ * @param model_name  name of the CNN model
+ * @param period  period of CNN inference in miliseconds
+ */
+void RunPeriodically(const std::string model_name, double period);
 
 
 class GPUExecution {
@@ -196,6 +209,11 @@ public:
     void perform_benchmark(void);
 
     /**
+     * @brief  set the dvfs frequencied according to the benchmark result
+     */
+    void set_dvfs_using_bench(void);
+
+    /**
      * @brief  fine tune the GPU frequency.
      */
     void fine_tune(void);
@@ -209,17 +227,6 @@ public:
      * @return absl::OkStatus()  if successful, returns error otherwise
      */
     absl::Status RunModelSample(void);
-
-
-    // Run tflite model, copyright: Tensorflow Authors
-    // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
-    // modified by Jongmin Kim
-    /**
-     * @brief  Run the Model on GPU on a specific interval using Tensorflow APIs simulating continuous vision workload
-     *
-     * @return absl::OkStatus()  if successful, returns error otherwise
-     */
-    absl::Status RunPeriodically(void);
 
 private:
     std::string model_name;       //< model file name ***.tflite

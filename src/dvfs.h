@@ -32,7 +32,7 @@ limitations under the License.
 #ifndef DVFS_H
 #define DVFS_H
 
-#define F8131 1 // for test use
+#define SARGO 1 // for test use
 
 #define EXIT_IF_ERROR(s) {auto c=(s);if(!c.ok()){std::cerr << c.message();exit(-1);}}
 
@@ -98,7 +98,7 @@ const std::string busFreq [12] = {"13763",
 #endif // F8131_DEFINED
 
 // Pixel 4
-// Snapdragon 855, Adreno 640v2 GPU
+// Snapdragon 670, Adreno 615 GPU
 #ifdef FLAME
 const std::string CPU_SYSFS_PATH = "/sys/devices/system/cpu";
 const std::string GPU_SYSFS_PATH = "/sys/class/kgsl/kgsl-3d0"; //< path for core sysfs
@@ -130,6 +130,40 @@ const std::string busFreq [11] = {"7980",
                                 "762"};
 #endif // FLAME_DEFINED
 
+// Pixel 3a
+// Snapdragon 
+#ifdef SARGO
+const std::string CPU_SYSFS_PATH = "/sys/devices/system/cpu";
+const std::string GPU_SYSFS_PATH = "/sys/class/kgsl/kgsl-3d0"; //< path for core sysfs
+const std::string GPU_GPUBW_PATH = "/sys/class/devfreq/soc:qcom,gpubw"; //< path for bus devfreq
+// available GPU core frequencies can be found at "GPU_SYSFS_PATH/available_frequencies"
+// available GPU bus frequencies can be found at "GPU_GPUBW_PATH/available_frequencies"
+// Although we can directly extract the values from the path
+// We just manually define it here for convenience since they never change
+const int numCoreFreq = 4;
+const int numBusFreq = 11;
+
+// available core frequencies in descending order
+const std::string coreFreq [4] = {"430000000",
+                                "355000000",
+                                "267000000",
+                                "180000000"};
+// available bus frequencies in descending order
+const std::string busFreq [11] = {"6881",
+                                "5931",
+                                "5161",
+                                "3879",
+                                "3147",
+                                "2597",
+                                "2086",
+                                "1720",
+                                "1144",
+                                "762",
+                                "381"};
+
+
+#endif // SARGO_DEFINED
+
 /**
  * @brief  helper function for writing into a file
  *
@@ -140,16 +174,6 @@ const std::string busFreq [11] = {"7980",
  * @return -1  some error happened during the process (likely to be a permission error) 
  */
 int write_to_file(const std::string path, const std::string value);
-
-// Run tflite model, copyright: Tensorflow Authors
-// Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
-// modified by Jongmin Kim
-/**
- * @brief  Run the Model on GPU on a specific interval using Tensorflow APIs simulating continuous vision workload
- * @param model_name  name of the CNN model
- * @param period  period of CNN inference in miliseconds
- */
-void RunPeriodically(const std::string model_name, double period);
 
 
 class GPUExecution {
@@ -176,14 +200,31 @@ public:
     GPUExecution(const GPUExecution &) = delete;
     GPUExecution & operator=(const GPUExecution &) = delete;
     
-    
+
+
     /**
-     * @brief  set GPU to performance mode as specified by vendors
+     * @brief  set CPU to performance mode as specified by vendors
      *
      * @return 0  successful 
      * @return -1  some error happened during the process (likely to be a permission error) 
      */
-    int set_gpu_performance_mode(void);
+    int set_cpu_performance_mode(void);
+    
+    /**
+     * @brief  set GPU Core to performance mode as specified by vendors
+     *
+     * @return 0  successful 
+     * @return -1  some error happened during the process (likely to be a permission error) 
+     */
+    int set_gpu_core_performance_mode(void);
+
+    /**
+     * @brief  set GPU Bus to performance mode as specified by vendors
+     *
+     * @return 0  successful 
+     * @return -1  some error happened during the process (likely to be a permission error) 
+     */
+    int set_gpu_bus_performance_mode(void);
 
     /**
      * @brief  set GPU frequencies to max
@@ -192,6 +233,35 @@ public:
      * @return -1  some error happened during the process (likely to be a permission error) 
      */
     inline int set_gpu_to_max(void);
+
+
+    /**
+     * @brief  prepare for default governor mode
+     */
+    void set_default_governor_mode(void);
+
+    /**
+     * @brief  prepare for coscaling mode
+     */
+    void set_coscaling_mode(void);
+
+    /**
+     * @brief  prepare for core only scaling mode
+     */
+    void set_core_scaling_mode(void);
+
+    /**
+     * @brief  prepare for bus only scaling mode
+     */
+    void set_bus_scaling_mode(void);
+
+    /**
+     * @brief  GPU setting back to original
+     *
+     * @return 0  successful 
+     * @return -1  some error happened during the process (likely to be a permission error) 
+     */
+    int restore_original(void);
 
     /**
      * @brief  set GPU frequencies to certain level
@@ -202,6 +272,26 @@ public:
      * @return -1  some error happened during the process (likely to be a permission error) 
      */
     int set_gpu_to_level(int core_index, int bus_index);
+
+
+    /**
+     * @brief  set only GPU Core frequency to certain level
+     * @param core_index  target frequency index to the coreFreq array
+     *
+     * @return 0  successful 
+     * @return -1  some error happened during the process (likely to be a permission error) 
+     */
+    int set_gpu_core_to_level(int core_index);
+
+
+    /**
+     * @brief  set only GPU Bus frequency to certain level
+     * @param bus_index  target frequency index to the busFreq array
+     *
+     * @return 0  successful 
+     * @return -1  some error happened during the process (likely to be a permission error) 
+     */
+    int set_gpu_bus_to_level( int bus_index);
 
     /**
      * @brief  run the model for some frequency settings for benchmarking
@@ -218,6 +308,16 @@ public:
      */
     void fine_tune(void);
 
+    /**
+     * @brief  set the GPU Core frequency only to meet the target latency
+     */
+    void core_only_scale(void);
+
+    /**
+     * @brief  set the GPU Bus frequency only to meet the target latency
+     */
+    void bus_only_scale(void);
+
     // Run tflite model, copyright: Tensorflow Authors
     // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
     // modified by Jongmin Kim
@@ -228,12 +328,21 @@ public:
      */
     absl::Status RunModelSample(void);
 
+    // Run tflite model, copyright: Tensorflow Authors
+    // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
+    // modified by Jongmin Kim
+    /**
+     * @brief  Run the Model on GPU on a specific interval using Tensorflow APIs simulating continuous vision workload
+     */
+    void RunPeriodically(void);
+
 private:
-    std::string model_name;       //< model file name ***.tflite
+    std::string model_name;             //< model file name ***.tflite
     int currentCoreFreqIndex;           //< current index for coreFreq
     int currentBusFreqIndex;            //< current index for busFreq
     double executionTime;               //< execution latency for current settings in ms
     double latencyTarget;               //< latency target for GPU execution in ms
+    int noncredibleBus;                 //< starting index of Bus level that spits out suspicious results
 
     // Tensorflow environment related variables
     std::unique_ptr<FlatBufferModel> flatbuffer; //< Flat BUffer Model

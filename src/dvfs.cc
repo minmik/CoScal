@@ -48,10 +48,11 @@ int write_to_file(const std::string path, const std::string value) {
 
 GPUExecution::GPUExecution(const std::string _model_name, double target) {
     model_name = _model_name;
-    currentCoreFreqIndex = -1;
-    currentBusFreqIndex = -1;
+    currentCoreFreqIndex = 100;
+    currentBusFreqIndex = 100;
     executionTime = 0.0;
     latencyTarget = target;
+    noncredibleBus = numBusFreq;
     
     /* Maybe will be used in mixbench
     opIntensity = 4.75;
@@ -76,35 +77,11 @@ GPUExecution::GPUExecution(const std::string _model_name, double target) {
             << std::endl;
     EXIT_IF_ERROR(
         context.InitFromGraphWithTransforms(create_info, &graph_cl, &env));
-
-
-    if(set_gpu_performance_mode() == -1) {
-        std::cerr << "Something went wrong when setting GPU to performance mode"
-                << std::endl << "Check permission" << std::endl;
-        exit(-1);
-    }
-    if(set_gpu_to_max() == -1) {
-        std::cerr << "Something went wrong when setting GPU to level " 
-                << "0, 0" << std::endl
-                << "Check permission" << std::endl;
-        exit(-1);
-    }
-
-    EXIT_IF_ERROR(RunModelSample());
-
-    // Latency Target Lowering when target unachievable
-    if(currentCoreFreqIndex == 0 && currentBusFreqIndex == 0 && executionTime > latencyTarget) {
-        double oldTarget = latencyTarget;
-        while(executionTime > latencyTarget) {
-            latencyTarget *= 2.0f;
-        }
-        std::cerr << "Latency Target " << oldTarget << " unachievable, " <<
-                    "lowering the latency target to " << latencyTarget << std::endl;
-    }
 }
 
 
-int GPUExecution::set_gpu_performance_mode(void) {
+
+int GPUExecution::set_cpu_performance_mode(void) {
     int result = -1;
 #ifdef F8131
     result = 0;
@@ -116,15 +93,8 @@ int GPUExecution::set_gpu_performance_mode(void) {
     result += write_to_file(CPU_SYSFS_PATH + "/cpu2/cpufreq/scaling_governor", "performance");
     result += write_to_file(CPU_SYSFS_PATH + "/cpu3/online", "1");
     result += write_to_file(CPU_SYSFS_PATH + "/cpu3/cpufreq/scaling_governor", "performance");
-    result += write_to_file(GPU_SYSFS_PATH + "/bus_split", "0");
-    result += write_to_file(GPU_SYSFS_PATH + "/force_bus_on", "1");
-    result += write_to_file(GPU_SYSFS_PATH + "/force_clk_on", "1");
-    result += write_to_file(GPU_SYSFS_PATH + "/force_rail_on", "1");
-    result += write_to_file(GPU_SYSFS_PATH + "/idle_timer", "10000000");
-    result += write_to_file(GPU_SYSFS_PATH + "/devfreq/governor", "performance");
-    result += write_to_file(GPU_GPUBW_PATH + "/governor", "performance");
 #endif
-#ifdef FLAME
+#if defined(FLAME) || defined(SARGO)
     result = 0;
     result += write_to_file(CPU_SYSFS_PATH + "/cpu0/online", "1");
     result += write_to_file(CPU_SYSFS_PATH + "/cpu0/cpufreq/scaling_governor", "performance");
@@ -142,16 +112,60 @@ int GPUExecution::set_gpu_performance_mode(void) {
     result += write_to_file(CPU_SYSFS_PATH + "/cpu6/cpufreq/scaling_governor", "performance");
     result += write_to_file(CPU_SYSFS_PATH + "/cpu7/online", "1");
     result += write_to_file(CPU_SYSFS_PATH + "/cpu7/cpufreq/scaling_governor", "performance");
+#endif
+    return result < 0 ? -1 : 0; 
+}
+
+
+int GPUExecution::restore_original(void) {
+    int result = -1;
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
+    result = 0;
+    result += write_to_file(GPU_SYSFS_PATH + "/bus_split", "1");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_bus_on", "0");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_clk_on", "0");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_rail_on", "0");
+    result += write_to_file(GPU_SYSFS_PATH + "/idle_timer", "80");
+    result += write_to_file(GPU_SYSFS_PATH + "/devfreq/governor", "msm-adreno-tz");
+    result += write_to_file(GPU_GPUBW_PATH + "/governor", "bw_vbif");
+    result += write_to_file(GPU_SYSFS_PATH + "/max_gpuclk", coreFreq[0]);
+    result += write_to_file(GPU_GPUBW_PATH + "/min_freq", busFreq[numBusFreq - 1]);
+    result += write_to_file(GPU_GPUBW_PATH + "/max_freq", busFreq[0]);
+    
+#endif
+    return result < 0 ? -1 : 0; 
+}
+
+int GPUExecution::set_gpu_core_performance_mode(void) {
+    int result = -1;
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
+    result = 0;
     result += write_to_file(GPU_SYSFS_PATH + "/bus_split", "0");
     result += write_to_file(GPU_SYSFS_PATH + "/force_bus_on", "1");
     result += write_to_file(GPU_SYSFS_PATH + "/force_clk_on", "1");
     result += write_to_file(GPU_SYSFS_PATH + "/force_rail_on", "1");
     result += write_to_file(GPU_SYSFS_PATH + "/idle_timer", "10000000");
     result += write_to_file(GPU_SYSFS_PATH + "/devfreq/governor", "performance");
+#endif
+    return result < 0 ? -1 : 0; 
+}
+
+
+int GPUExecution::set_gpu_bus_performance_mode(void) {
+    int result = -1;
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
+    result = 0;
+    result += write_to_file(GPU_SYSFS_PATH + "/bus_split", "0");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_bus_on", "1");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_clk_on", "1");
+    result += write_to_file(GPU_SYSFS_PATH + "/force_rail_on", "1");
+    result += write_to_file(GPU_SYSFS_PATH + "/idle_timer", "10000000");
     result += write_to_file(GPU_GPUBW_PATH + "/governor", "performance");
 #endif
     return result < 0 ? -1 : 0; 
 }
+
+
 
 inline int GPUExecution::set_gpu_to_max(void) {
     return set_gpu_to_level(0, 0);
@@ -171,7 +185,7 @@ int GPUExecution::set_gpu_to_level(int core_index, int bus_index) {
     }
 
     int result = -1;
-#if defined(F8131) || defined(FLAME)
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
     result = 0;
     
     // Scaling core frequency
@@ -198,6 +212,188 @@ int GPUExecution::set_gpu_to_level(int core_index, int bus_index) {
 }
 
 
+int GPUExecution::set_gpu_core_to_level(int core_index) {
+    //check for index validity
+    if(core_index < 0 || core_index >= numCoreFreq) {
+        std::cerr << "set_gpu_core_to_level: wrong core_index "
+                    << core_index << " specified" << std::endl;
+        return -1;
+    }
+
+    int result = -1;
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
+    result = 0;
+    
+    // Scaling core frequency
+    result += write_to_file(GPU_SYSFS_PATH + "/max_gpuclk", coreFreq[core_index]);
+    if(result >= 0)
+        currentCoreFreqIndex = core_index;
+#endif
+    return result < 0 ? -1 : 0;
+}
+
+int GPUExecution::set_gpu_bus_to_level(int bus_index) {
+    //check for index validity
+    if(bus_index < 0 || bus_index >= numBusFreq) {
+        std::cerr << "set_gpu_bus_to_level: wrong bus_index"
+                    << bus_index << " specified" << std::endl;
+        return -1;
+    }
+
+    int result = -1;
+#if defined(F8131) || defined(FLAME) || defined(SARGO)
+    result = 0;
+
+    // Scaling bus frequency
+    const std::string targetBusFreq = busFreq[bus_index];
+    // leveling down the bus frequency (higher index means lower freq)
+    if(currentBusFreqIndex < bus_index) {
+        result += write_to_file(GPU_GPUBW_PATH + "/min_freq", targetBusFreq);
+        result += write_to_file(GPU_GPUBW_PATH + "/max_freq", targetBusFreq);
+    }
+    // leveling up the bus frequency (higher index means lower freq)
+    else {
+        result += write_to_file(GPU_GPUBW_PATH + "/max_freq", targetBusFreq);
+        result += write_to_file(GPU_GPUBW_PATH + "/min_freq", targetBusFreq);
+    }
+    if(result >= 0)
+        currentBusFreqIndex = bus_index;
+#endif
+    return result < 0 ? -1 : 0;
+}
+
+
+
+void GPUExecution::set_default_governor_mode(void) {
+    if(restore_original() == -1) {
+        std::cerr << "Something went wrong when restoring default options"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_cpu_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting CPU to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+
+    EXIT_IF_ERROR(RunModelSample());
+
+    if(executionTime > latencyTarget) {
+        std::cerr << "Latency Target " << latencyTarget << " unachievable, " <<
+                    "lower the latency target!!! " << std::endl;
+        exit(-1);
+    }
+}
+
+
+void GPUExecution::set_coscaling_mode(void) {
+    if(restore_original() == -1) {
+        std::cerr << "Something went wrong when restoring default options"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_cpu_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting CPU to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_core_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting GPU Core to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_bus_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting GPU Bus to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_to_max() == -1) {
+        std::cerr << "Something went wrong when setting GPU to level " 
+                << "0, 0" << std::endl
+                << "Check permission" << std::endl;
+        exit(-1);
+    }
+
+    EXIT_IF_ERROR(RunModelSample());
+
+    // Latency Target Lowering when target unachievable
+    if(executionTime > latencyTarget) {
+        std::cerr << "Latency Target " << latencyTarget << " unachievable, " <<
+                    "lower the latency target!!! " << std::endl;
+        exit(-1);
+    }
+}
+
+
+
+void GPUExecution::set_core_scaling_mode(void) {
+    if(restore_original() == -1) {
+        std::cerr << "Something went wrong when restoring default options"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_cpu_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting CPU to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_core_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting GPU Core to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_core_to_level(0) == -1) {
+        std::cerr << "Something went wrong when setting GPU Core to level " 
+                << "0, 0" << std::endl
+                << "Check permission" << std::endl;
+        exit(-1);
+    }
+
+    EXIT_IF_ERROR(RunModelSample());
+
+    if(executionTime > latencyTarget) {
+        std::cerr << "Latency Target " << latencyTarget << " unachievable, " <<
+                    "lower the latency target!!! " << std::endl;
+        exit(-1);
+    }
+}
+
+
+
+void GPUExecution::set_bus_scaling_mode(void) {
+    if(restore_original() == -1) {
+        std::cerr << "Something went wrong when restoring default options"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_cpu_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting CPU to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_bus_performance_mode() == -1) {
+        std::cerr << "Something went wrong when setting GPU Core to performance mode"
+                << std::endl << "Check permission" << std::endl;
+        exit(-1);
+    }
+    if(set_gpu_bus_to_level(0) == -1) {
+        std::cerr << "Something went wrong when setting GPU Core to level " 
+                << "0, 0" << std::endl
+                << "Check permission" << std::endl;
+        exit(-1);
+    }
+
+    EXIT_IF_ERROR(RunModelSample());
+
+    if(executionTime > latencyTarget) {
+        std::cerr << "Latency Target " << latencyTarget << " unachievable, " <<
+                    "lower the latency target!!! " << std::endl;
+        exit(-1);
+    }
+}
+
+
+
 
 void GPUExecution::perform_benchmark(void) {
     std::cout << "Performing Benchmark..." << std::endl;
@@ -221,6 +417,13 @@ void GPUExecution::perform_benchmark(void) {
         }
         EXIT_IF_ERROR(RunModelSample());
         busBenchResults_ms[j] = executionTime;
+        // When Benchresults do not differ much (less than 0.1ms)
+        // DO NOT TRUST THE RESULT
+        // Later considered in fine-tuning
+        if(noncredibleBus == numBusFreq && j >= 1) {
+            if(executionTime - busBenchResults_ms[j - 1] <= 0.1)
+                noncredibleBus = j;
+        }
     }
 
     if(set_gpu_to_max() == -1) {
@@ -239,7 +442,7 @@ void GPUExecution::set_dvfs_using_bench(void) {
         if(coreBenchResults_ms[i] > latencyTarget)
             break;
     }
-    for(j = 1; j < numBusFreq; j++) {
+    for(j = 1; j < noncredibleBus; j++) {
         if(busBenchResults_ms[j] > latencyTarget)
             break;
     }
@@ -343,8 +546,62 @@ void GPUExecution::fine_tune(void) {
         // recompute executionTime
         EXIT_IF_ERROR(RunModelSample());
     }
+
+    // Taking care of noncredible area search at last
+    if(currentBusFreqIndex == noncredibleBus - 1) {
+        // Pass 1. Scale the bus frequency down the noncredible area
+        int j = currentBusFreqIndex;
+        while(j < numBusFreq) {
+            EXIT_IF_ERROR(RunModelSample());
+            if(executionTime > latencyTarget) {
+                set_gpu_bus_to_level(j - 1);
+                break;
+            }
+            set_gpu_bus_to_level(j);
+            j++;
+        }
+        // Pass 2. If it shows unstable results, scale up back.
+        while(currentBusFreqIndex >= 1) {
+            int check_repeat = 0;
+            while(check_repeat < 10 && executionTime < latencyTarget) {
+                EXIT_IF_ERROR(RunModelSample());
+                check_repeat ++;
+            }
+            if(executionTime < latencyTarget)
+                break;
+            else
+                set_gpu_bus_to_level(currentBusFreqIndex - 1);
+        }
+    }
+
+
     std::cout<< "Fine tuning done: core " << coreFreq[currentCoreFreqIndex] <<
                 " bus " << busFreq[currentBusFreqIndex] << std::endl;
+}
+
+
+
+void GPUExecution::core_only_scale(void) {
+    int i;
+    for(i = 1; i < numCoreFreq; i++) {
+        set_gpu_core_to_level(i);
+        EXIT_IF_ERROR(RunModelSample());
+        if(executionTime > latencyTarget) break;
+    }
+    set_gpu_core_to_level(i - 1);
+    std::cout<< "Core set to " << coreFreq[i - 1] << std::endl; 
+}
+
+
+void GPUExecution::bus_only_scale(void) {
+    int i;
+    for(i = 1; i < numBusFreq; i++) {
+        set_gpu_bus_to_level(i);
+        EXIT_IF_ERROR(RunModelSample());
+        if(executionTime > latencyTarget) break;
+    }
+    set_gpu_bus_to_level(i - 1);
+    std::cout<< "Bus set to " << coreFreq[i - 1] << std::endl; 
 }
 
 
@@ -386,30 +643,7 @@ absl::Status GPUExecution::RunModelSample(void) {
 // Run tflite model periodically, copyright: Tensorflow Authors
 // Original Code: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/delegates/gpu/cl/testing/performance_profiling.cc
 // modified by Jongmin Kim
-void RunPeriodically(const std::string model_name, double period) {
-    // Some Environment Setting
-    auto flatbuffer = tflite::FlatBufferModel::BuildFromFile(model_name.c_str());
-    GraphFloat32 graph_cl;
-    ops::builtin::BuiltinOpResolver op_resolver;
-    EXIT_IF_ERROR(BuildFromFlatBuffer(*flatbuffer, op_resolver, &graph_cl));
-
-    Environment env;
-    EXIT_IF_ERROR(CreateEnvironment(&env));
-
-    InferenceContext::CreateInferenceInfo create_info;
-    create_info.precision = env.IsSupported(CalculationsPrecision::F16)
-                                ? CalculationsPrecision::F16
-                                : CalculationsPrecision::F32;
-    create_info.storage_type = GetFastestStorageType(env.device());
-    std::cout << "Precision: " << ToString(create_info.precision) << std::endl;
-    std::cout << "Storage type: " << ToString(create_info.storage_type)
-            << std::endl;
-    InferenceContext context;
-    EXIT_IF_ERROR(
-        context.InitFromGraphWithTransforms(create_info, &graph_cl, &env));
-
-    //const int kNumRuns = 10;
-
+void GPUExecution::RunPeriodically(void) {
     struct timespec ts;
     int err = clock_getres(CLOCK_MONOTONIC, &ts);
 
@@ -417,14 +651,21 @@ void RunPeriodically(const std::string model_name, double period) {
             << ts.tv_nsec << "  ns" << std::endl;
     
     err = clock_gettime(CLOCK_MONOTONIC, &ts);
+    int timeshow = 0;
     while (true) {
-        long next_tick = (ts.tv_sec * 1000000000L + ts.tv_nsec) + (long) (period * 1000000L);
+        long next_tick = (ts.tv_sec * 1000000000L + ts.tv_nsec) + (long) (latencyTarget * 1000000L);
         ts.tv_sec = next_tick / 1000000000L;
         ts.tv_nsec = next_tick % 1000000000L;
-        std::cout << (double)ts.tv_sec * 1000.0 + (double)ts.tv_nsec / 1000000.0 << std::endl;
+        const auto start = std::chrono::high_resolution_clock::now();
         EXIT_IF_ERROR(context.AddToQueue(env.queue()));
         err = clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &ts, NULL);
         EXIT_IF_ERROR(env.queue()->WaitForCompletion());
+        const auto end = std::chrono::high_resolution_clock::now();
+        timeshow ++;
+        if(timeshow == 10) {
+            std::cout << "Elapsed Time - " << (end-start).count() * 1e-6f << " ms" << std::endl;
+            timeshow = 0;
+        }
     }
 }
 
@@ -437,47 +678,134 @@ int main(int argc, char** argv) {
     double target_latency_ms;
 
     if (argc <= 1) {
-        std::cerr << "Expected model path as second argument.";
+        std::cerr << "Expected model path as second argument." << std::endl;
+        std::cerr << "Expected format: ./dvfs model_name.tflite 16.666 1" << std::endl;
+        std::cerr << "Where second argument 16.666 is target latency in ms" << std::endl;
+        std::cerr << "and third argument 1 is MODE" << std::endl;
+        std::cerr << "List of Available MODEs" << std::endl;
+        std::cerr << "0: Default Governor" << std::endl;
+        std::cerr << "1: Coscaling" << std::endl;
+        std::cerr << "2: Core only scaling" << std::endl;
+        std::cerr << "3: Bus only scaling" << std::endl;
+        std::cerr << "4: Max Frequencies" << std::endl;
         return -1;
     }
-    if (argc <= 2) {
-        std::cerr << "Error: Target performance not specified" << std::endl;
+    else if (argc <= 2) {
+        std::cerr << "Error: Target latency not specified" << std::endl;
+        std::cerr << "Expected format: ./dvfs model_name.tflite 16.666 1" << std::endl;
+        std::cerr << "Where second argument 16.666 is target latency in ms" << std::endl;
+        std::cerr << "and third argument 1 is MODE" << std::endl;
+        std::cerr << "List of Available MODEs" << std::endl;
+        std::cerr << "0: Default Governor" << std::endl;
+        std::cerr << "1: Coscaling" << std::endl;
+        std::cerr << "2: Core only scaling" << std::endl;
+        std::cerr << "3: Bus only scaling" << std::endl;
+        std::cerr << "4: Max Frequencies" << std::endl;
         return -1;
     }
     else if (argc <= 3){
-        target_latency_ms = std::atof(argv[2]);
-        auto load_status = tflite::gpu::cl::LoadOpenCL();
-        if (!load_status.ok()) {
-            std::cerr << load_status.message();
-            return -1;
-        }
-        std::cout << "----------------------------------------------" << std::endl;
-        std::cout << "Starting DVFS adjustment..." << std::endl;
-        std::cout << "Model: " << argv[1] << std::endl;
-        std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
-        std::cout << "----------------------------------------------" << std::endl;
-        // Creates GPUExecution instance
-        // Notice: the constructor does a lot of job
-        tflite::gpu::cl::GPUExecution execution(argv[1], target_latency_ms);
-
-
-        // TODO
-        // benchmarking
-        execution.perform_benchmark();
-        execution.set_dvfs_using_bench();
-
-        // should be automatically decided by benchmarking results
-        execution.fine_tune();
-        return 0;
+        std::cerr << "Error: MODE not specified" << std::endl;
+        std::cerr << "Expected format: ./dvfs model_name.tflite 16.666 1" << std::endl;
+        std::cerr << "Where second argument 16.666 is target latency in ms" << std::endl;
+        std::cerr << "and third argument 1 is MODE" << std::endl;
+        std::cerr << "List of Available MODEs" << std::endl;
+        std::cerr << "0: Default Governor" << std::endl;
+        std::cerr << "1: Coscaling" << std::endl;
+        std::cerr << "2: Core only scaling" << std::endl;
+        std::cerr << "3: Bus only scaling" << std::endl;
+        std::cerr << "4: Max Frequencies" << std::endl;
+        return -1;
     }
-    else if(argv[3]){
+    else {
         target_latency_ms = std::atof(argv[2]);
         auto load_status = tflite::gpu::cl::LoadOpenCL();
         if (!load_status.ok()) {
             std::cerr << load_status.message();
             return -1;
         }
-        tflite::gpu::cl::RunPeriodically(argv[1], target_latency_ms);
+        int mode = atoi(argv[3]);
+        tflite::gpu::cl::GPUExecution execution(argv[1], target_latency_ms);
+        switch (mode) {
+        case 0: // No scaling, Default Governor
+            // Creates GPUExecution instance
+            // Notice: the constructor does a lot of job
+
+            execution.set_default_governor_mode();
+
+            std::cout << "-----------------------------------------------------------" << std::endl;
+            std::cout << "Starting Continuous Vision Simulation (Default Governor)..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            execution.RunPeriodically();
+            break;
+        case 1: // Coscaling
+            std::cout << "-----------------------------------------------------------" << std::endl;
+            std::cout << "Starting DVFS coscaling adjustment..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            // Creates GPUExecution instance
+            // Notice: the constructor does a lot of job
+            execution.set_coscaling_mode();
+
+            // TODO
+            // benchmarking
+            execution.perform_benchmark();
+            execution.set_dvfs_using_bench();
+
+            // should be automatically decided by benchmarking results
+            execution.fine_tune();
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            std::cout << "Starting Continuous Vision Simulation (Coscaling)..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            execution.RunPeriodically();
+            break;
+        case 2: // Core Scaling
+            execution.set_core_scaling_mode();
+
+            execution.core_only_scale();
+
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            std::cout << "Starting Continuous Vision Simulation (Core Only)..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            execution.RunPeriodically();
+            break;
+        case 3: // Bus Scaling
+            execution.set_bus_scaling_mode();
+
+            execution.bus_only_scale();
+
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            std::cout << "Starting Continuous Vision Simulation (Bus Only)..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            execution.RunPeriodically();
+            break;
+        case 4:
+            execution.set_coscaling_mode();
+
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            std::cout << "Starting Continuous Vision Simulation (Max Freqs)..." << std::endl;
+            std::cout << "Model: " << argv[1] << std::endl;
+            std::cout << "Target Latency: " << target_latency_ms << " ms" << std::endl;
+            std::cout << "-----------------------------------------------------------"  << std::endl;
+            execution.RunPeriodically();
+        default:
+            std::cerr << "Error: Mode not specified" << std::endl;
+            std::cerr << "List of Available Modes" << std::endl;
+            std::cerr << "0: Default Governor" << std::endl;
+            std::cerr << "1: Coscaling" << std::endl;
+            std::cerr << "2: Core only scaling" << std::endl;
+            std::cerr << "3: Bus only scaling" << std::endl;
+            std::cerr << "4: Max Frequencies" << std::endl;
+            return -1;
+        }
         return -1; // This program does not stop unless aborted
     }
 

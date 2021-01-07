@@ -1,6 +1,6 @@
 ## CoScal
 
-Recent mobile devices, with powerful GPUs, are capable of running highly computation and memory expensive neural network tasks like continuous vision workloads.
+(Abstract) Recent mobile devices, with powerful GPUs, are capable of running highly computation and memory expensive neural network tasks like continuous vision workloads.
 However, high power consumption of computing neural networks is a major concern in mobile continuous vision applications.
 DVFS is an efficient power saving technique that can be used to lower power consumption of computing neural networks on mobile devices.
 We analyze the effect of DVFS on a system by roofline analysis and devise a novel analytic model: DVFS-incorporated roofline model.

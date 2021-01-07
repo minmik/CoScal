@@ -1,4 +1,15 @@
-Guide on how to build and use this program
+## CoScal
+
+Recent mobile devices, with powerful GPUs, are capable of running highly computation and memory expensive neural network tasks like continuous vision workloads.
+However, high power consumption of computing neural networks is a major concern in mobile continuous vision applications.
+DVFS is an efficient power saving technique that can be used to lower power consumption of computing neural networks on mobile devices.
+We analyze the effect of DVFS on a system by roofline analysis and devise a novel analytic model: DVFS-incorporated roofline model.
+Based on the analytic model, we create CoScal, a frequency scaling system which uses co-scaling of both GPU core and bus frequency levels to reduce power consumption.
+CoScal automatically tests the performance when running a neural network inference on a mobile device at certain GPU core and bus frequencies and finds the optimal GPU core and bus frequencies for a given performance target.
+We test CoScal on Pixel 3a by measuring the total power consumption of the device when running a continuous vision task.
+Experimental results show that CoScal is able to steadily save more power compared to using default DVFS governors.
+
+We provide a guide on how to build and use this program here.
 
 ## 1. Philipp Wollermann's guide on how to build Tensorflow with Bazelisk (modified to fit for Android)
 Source: https://gist.github.com/philwo/f3a8144e46168f23e40f291ffe92e63c
@@ -58,7 +69,7 @@ Please specify an Android build tools version to use. [Available versions: ['28.
 # path doesn't really matter but you have to edit the BUILD file in @dvfs_project/src for doing so
 $ cp ./dvfs_project/src/* ./tensorflow/tensorflow/lite/delegates/gpu/cl/testing
 
-# Build Bazel
+# Build using Bazel
 $ cd tensorflow
 $ bazel build -c opt --cxxopt=--std=c++11 --config=android_arm64 //tensorflow/lite/delegates/gpu/cl/testing:dvfs
 
